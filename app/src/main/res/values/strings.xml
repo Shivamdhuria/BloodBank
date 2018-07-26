@@ -2,4 +2,18 @@
     <string name="app_name">BloodBank</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+
+    <string name="intro1title">Blood Bank</string>
+    <string name="intro1description">An easy way for blood donors to connect.</string>
+
+    <string name="intro2title">Find Blood Easily</string>
+    <string name="intro2description">An easy way for blood donors to connect.</string>
+
+    <string name="intro3title">Do your bit</string>
+    <string name="intro3description">An easy way for blood donors to connect.</string>
+
+    <string name="loginhint">Enter 10 digit number here</string>
+    <string name="next">Proceed</string>
+
+
 </resources>
