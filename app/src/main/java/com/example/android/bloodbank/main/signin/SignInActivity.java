@@ -5,11 +5,21 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.android.bloodbank.R;
 
-public class SignInActivity extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity implements SignInView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+    }
+
+    @Override
+    public void signInSuccess() {
+
+    }
+
+    @Override
+    public void signInError() {
+
     }
 }

@@ -13,7 +13,8 @@
     <string name="intro3description">An easy way for blood donors to connect.</string>
 
     <string name="loginhint">Enter 10 digit number here</string>
-    <string name="next">Proceed</string>
+    <string name="otphint">Enter OTP here</string>
+    <string name="next">Generate OTP</string>
 
 
 </resources>
