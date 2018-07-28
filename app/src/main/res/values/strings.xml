@@ -14,7 +14,8 @@
 
     <string name="loginhint">Enter 10 digit number here</string>
     <string name="otphint">Enter OTP here</string>
-    <string name="next">Generate OTP</string>
+    <string name="generate">Generate OTP</string>
+    <string name="next">Submit</string>
 
 
 </resources>
