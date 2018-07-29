@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.android.bloodbank.R;
@@ -13,9 +14,10 @@ import com.example.android.bloodbank.R;
 public class SignInActivity extends AppCompatActivity implements SignInView {
 
     EditText editText_number,editText_otp;
-    Button button_submit;
+    Button button_submit,button_next;
     private SignInPresenter signInPresenter;
     private ConstraintLayout constraintLayout;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,8 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
         editText_number=(EditText)findViewById(R.id.editText_number);
         editText_otp=findViewById(R.id.editText_otp);
         button_submit=findViewById(R.id.button_submit);
+        button_next=findViewById(R.id.button_next);
+        progressBar=(ProgressBar)findViewById(R.id.progressBar);
 
 
         button_submit.setOnClickListener(new View.OnClickListener() {
@@ -36,6 +40,14 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
                 String phoneNumber = editText_number.getText().toString();
                 signInPresenter = new SignInModel(SignInActivity.this);
                 signInPresenter.generateOtp(phoneNumber);
+            }
+        });
+        button_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String code = editText_otp.getText().toString();
+                signInPresenter.signIn(code);
+
             }
         });
 
@@ -62,5 +74,30 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
         Toast.makeText(this,"Invalid Number",Toast.LENGTH_LONG).show();
 
 
+    }
+
+    @Override
+    public void otpEdit(String code ) {
+        editText_otp.setText(code);
+    }
+
+    @Override
+    public void progressBarView() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void progressBarHide() {
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void somethingWentWrong() {
+        Toast.makeText(this,"Something went wrong",Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void codeInvalid() {
+        Toast.makeText(this,"Verification code invalid.",Toast.LENGTH_LONG).show();
     }
 }

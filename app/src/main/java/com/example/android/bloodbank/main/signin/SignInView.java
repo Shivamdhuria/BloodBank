@@ -6,5 +6,10 @@ public interface SignInView {
     void signInSuccess();
     void signInError();
     void numberInvalid();
+    void otpEdit(String code);
+    void progressBarView();
+    void progressBarHide();
+    void somethingWentWrong();
+    void codeInvalid();
 
 }
