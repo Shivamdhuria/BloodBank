@@ -41,6 +41,7 @@ public class SignInModel implements SignInPresenter {
 
             mAuth = FirebaseAuth.getInstance();
             sendVerificationCode(phoneNumber);
+            signInView.progressBarView();
             }
 
 
@@ -62,7 +63,7 @@ public class SignInModel implements SignInPresenter {
                 TimeUnit.SECONDS,
                 TaskExecutors.MAIN_THREAD,
                 mCallbacks);
-        Log.e("SignIn mOdel......",mobile);
+        Log.e("SignIn model......",mobile);
     }
 
 
@@ -123,7 +124,7 @@ public class SignInModel implements SignInPresenter {
                         } else {
 
                             //verification unsuccessful.. display an error message
-
+                                signInView.progressBarHide();
 
 
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
