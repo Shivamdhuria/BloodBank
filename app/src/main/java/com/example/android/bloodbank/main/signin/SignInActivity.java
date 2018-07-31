@@ -1,5 +1,6 @@
 package com.example.android.bloodbank.main.signin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.android.bloodbank.R;
+import com.example.android.bloodbank.main.buildprofile.BuildProfileActivity;
 
 public class SignInActivity extends AppCompatActivity implements SignInView {
 
@@ -61,6 +63,10 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
 
     @Override
     public void signInSuccess() {
+
+
+        Intent intent_buildprogress= new Intent(this, BuildProfileActivity.class);
+        startActivity(intent_buildprogress);
 
     }
 
