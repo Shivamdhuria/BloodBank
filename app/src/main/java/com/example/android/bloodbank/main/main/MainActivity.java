@@ -1,24 +1,28 @@
 package com.example.android.bloodbank.main.main;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.TextView;
 
 import com.example.android.bloodbank.R;
+import com.example.android.bloodbank.main.intro.IntroActivity;
+import com.example.android.bloodbank.main.signin.SignInActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,14 +40,14 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -51,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        checkIfFirstTime();
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +69,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void checkIfFirstTime() {
+        final String PREFS_NAME = "MyPrefsFile";
+
+
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+
+        if (settings.getBoolean("my_first_time", true)) {
+            //the app is being launched for first time, do something
+            Log.d("Comments", "First time");
+
+            // first time task
+
+
+            // record the fact that the app has been started at least once
+            settings.edit().putBoolean("my_first_time", false).commit();
+
+            Intent intentIntro = new Intent(this, IntroActivity.class);
+            startActivity(intentIntro);
+        } else {
+            // Check if user is signed in (non-null) and update UI accordingly.
+
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            updateUI(currentUser);
+        }
     }
 
 
@@ -143,5 +177,24 @@ public class MainActivity extends AppCompatActivity {
             // Show 3 total pages.
             return 3;
         }
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    void updateUI(FirebaseUser user){
+
+        if(user != null){
+            //TODO GET DETAILS FROM DB
+
+        }else{
+
+            //Send Back to Login
+            Intent intentLogin = new Intent(this, SignInActivity.class);
+            startActivity(intentLogin);
+        }
+
     }
 }

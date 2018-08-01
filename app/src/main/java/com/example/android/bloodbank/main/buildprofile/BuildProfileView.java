@@ -5,5 +5,8 @@ public interface BuildProfileView {
 
     void detailsIncorrect();
     void internetError();
-    void databaseNotAccessible();
+    void databaseNotWritten();
+    void databaseSuccessfullyWritten();
+    void progressBarView();
+    void progressBarHide();
 }

@@ -1,14 +1,18 @@
 package com.example.android.bloodbank.main.buildprofile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.android.bloodbank.R;
+import com.example.android.bloodbank.main.main.MainActivity;
 
 
 public class BuildProfileActivity extends AppCompatActivity implements BuildProfileView{
@@ -18,6 +22,7 @@ public class BuildProfileActivity extends AppCompatActivity implements BuildProf
     BuildProfilePresenter buildProfilePresenter;
     String number = "909090909";
     String TAG = "BuildProfile Activity";
+    ProgressBar progressBar;
 
 
 
@@ -29,7 +34,7 @@ public class BuildProfileActivity extends AppCompatActivity implements BuildProf
         editText_bloodgroup=findViewById(R.id.editText_bloodgroup);
         editText_location=findViewById(R.id.editText_location);
         editText_name=findViewById(R.id.editText_name);
-
+        progressBar=findViewById(R.id.progressBar2);
         buildProfilePresenter=new BuildProfileModel(BuildProfileActivity.this);
 
 
@@ -58,7 +63,30 @@ public class BuildProfileActivity extends AppCompatActivity implements BuildProf
     }
 
     @Override
-    public void databaseNotAccessible() {
+    public void databaseNotWritten() {
+        Toast.makeText(this,"Data Push Unsuccessfull",Toast.LENGTH_LONG).show();
 
     }
+    @Override
+    public void databaseSuccessfullyWritten() {
+        Intent intentMain = new Intent(this, MainActivity.class);
+        startActivity(intentMain);
+
+    }
+
+
+
+    @Override
+    public void progressBarView() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void progressBarHide() {
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
+
+
+
 }
