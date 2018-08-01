@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.example.android.bloodbank.R;
 import com.example.android.bloodbank.main.main.MainActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class BuildProfileActivity extends AppCompatActivity implements BuildProfileView{
@@ -20,7 +22,7 @@ public class BuildProfileActivity extends AppCompatActivity implements BuildProf
     Button button_save;
     EditText editText_bloodgroup,editText_name,editText_location;
     BuildProfilePresenter buildProfilePresenter;
-    String number = "909090909";
+
     String TAG = "BuildProfile Activity";
     ProgressBar progressBar;
 
@@ -39,6 +41,9 @@ public class BuildProfileActivity extends AppCompatActivity implements BuildProf
 
 
         button_save.setOnClickListener(new View.OnClickListener() {
+
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            String number = user.getPhoneNumber();
             @Override
             public void onClick(View view) {
                 buildProfilePresenter.saveToDatabase(number,editText_bloodgroup.getText().toString(),editText_name.getText().toString(),editText_location.getText().toString());

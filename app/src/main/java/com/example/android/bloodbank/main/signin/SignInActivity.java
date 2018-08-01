@@ -6,24 +6,29 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.android.bloodbank.R;
 import com.example.android.bloodbank.main.buildprofile.BuildProfileActivity;
+import com.example.android.bloodbank.main.main.MainActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class SignInActivity extends AppCompatActivity  {
-
+public class SignInActivity extends AppCompatActivity {
 
 
     private static final int RC_SIGN_IN = 123;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-
 
 
         // Choose authentication providers
@@ -40,12 +45,10 @@ public class SignInActivity extends AppCompatActivity  {
                 RC_SIGN_IN);
 
 
-
-
     }
 
 
-  @Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -54,10 +57,18 @@ public class SignInActivity extends AppCompatActivity  {
 
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
+
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                Intent intentMain = new Intent(this, BuildProfileActivity.class);
-                startActivity(intentMain);
-                // ...
+                //Checking if user already exists in database
+                phoneNumberAlreadyExists(user.getUid());
+
+
+
+
+
+
+                    // ...
+
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
@@ -65,5 +76,33 @@ public class SignInActivity extends AppCompatActivity  {
                 // ...
             }
         }
+    }
+
+    private void phoneNumberAlreadyExists( final String uid) {
+
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference users = root.child("users");
+        users.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.child(uid).exists()) {
+                    Intent intentMain = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intentMain);
+
+
+                }else{
+                    Intent intentBuild = new Intent(getApplicationContext(), BuildProfileActivity.class);
+                    startActivity(intentBuild);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 }
