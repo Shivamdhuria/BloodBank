@@ -17,6 +17,7 @@ public class IntroActivity extends MaterialIntroActivity{
         super.onCreate(savedInstanceState);
 
 
+
         addSlide(new SlideFragmentBuilder()
                         .backgroundColor(R.color.colorBackground)
                         .buttonsColor(R.color.colorAccent)

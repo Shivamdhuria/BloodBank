@@ -94,6 +94,8 @@ public class SignInModel implements SignInPresenter {
         public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
 
+            Log.e("SignIN model","Code sent");
+
             //storing the verification id that is sent to the user
             mVerificationId = s;
         }
@@ -117,6 +119,7 @@ public class SignInModel implements SignInPresenter {
                             //Hiding ProgressView
                             signInView.progressBarHide();
                             //verification successful we will start the profile activity
+                            signInView.signInSuccess();
 
 
 

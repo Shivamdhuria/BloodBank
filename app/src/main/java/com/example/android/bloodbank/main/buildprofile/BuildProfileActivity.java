@@ -2,6 +2,7 @@ package com.example.android.bloodbank.main.buildprofile;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ public class BuildProfileActivity extends AppCompatActivity implements BuildProf
     EditText editText_bloodgroup,editText_name,editText_location;
     BuildProfilePresenter buildProfilePresenter;
     String number = "909090909";
+    String TAG = "BuildProfile Activity";
 
 
 
@@ -35,6 +37,7 @@ public class BuildProfileActivity extends AppCompatActivity implements BuildProf
             @Override
             public void onClick(View view) {
                 buildProfilePresenter.saveToDatabase(number,editText_bloodgroup.getText().toString(),editText_name.getText().toString(),editText_location.getText().toString());
+                Log.e(TAG,editText_bloodgroup.getText().toString()+" "+editText_name.getText().toString()+"  "+editText_location.getText().toString());
 
             }
         });
