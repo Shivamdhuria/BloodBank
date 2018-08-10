@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,20 +16,24 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".main.main.MainActivity"
-            android:label="@string/app_name"
-            >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.intro.IntroActivity"
-            android:theme="@style/AppIntro"/>
+        <activity
+            android:name=".main.intro.IntroActivity"
+            android:theme="@style/AppIntro" />
         <activity android:name=".main.signin.SignInActivity" />
-        <activity android:name=".main.buildprofile.BuildProfileActivity">
+        <activity android:name=".main.buildprofile.BuildProfileActivity"></activity>
+        <activity android:name=".main.SetLocationActivity"></activity>
 
-        </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAINAWSyejBpJ_FdfCXD57yOg9RWvzwdtQ" />
+
     </application>
 
 </manifest>

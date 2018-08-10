@@ -20,6 +20,8 @@
     <string name="name">Name</string>
     <string name="location">Location</string>
 
+    <string name="setlocation">Set Location</string>
+
     <string-array name="blood_groups">
         <item>A+</item>
         <item>A-</item>
@@ -30,9 +32,6 @@
         <item>AB+</item>
         <item>AB-</item>
     </string-array>
-
-
-
 
 
 </resources>

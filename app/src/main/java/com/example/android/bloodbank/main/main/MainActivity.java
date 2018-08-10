@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,10 +189,12 @@ public class MainActivity extends AppCompatActivity {
 
         if(user != null){
             //TODO GET DETAILS FROM DB
+            Log.e("Main Activity","User not null"+ user.getUid());
 
         }else{
 
             //Send Back to Login
+            Log.e("Main Activity","User  null");
             Intent intentLogin = new Intent(this, SignInActivity.class);
             startActivity(intentLogin);
         }

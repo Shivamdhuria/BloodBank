@@ -13,14 +13,19 @@ import android.widget.Toast;
 
 import com.example.android.bloodbank.R;
 import com.example.android.bloodbank.main.main.MainActivity;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
 public class BuildProfileActivity extends AppCompatActivity implements BuildProfileView{
     Spinner spinner_blood_group;
-    Button button_save;
-    EditText editText_bloodgroup,editText_name,editText_location;
+    Button button_save,button_setLocation;
+    EditText editText_bloodgroup,editText_name;
     BuildProfilePresenter buildProfilePresenter;
 
     String TAG = "BuildProfile Activity";
@@ -33,8 +38,10 @@ public class BuildProfileActivity extends AppCompatActivity implements BuildProf
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_build_profile);
         button_save=findViewById(R.id.button_save);
+        button_setLocation=findViewById(R.id.button_location);
+
         editText_bloodgroup=findViewById(R.id.editText_bloodgroup);
-        editText_location=findViewById(R.id.editText_location);
+
         editText_name=findViewById(R.id.editText_name);
         progressBar=findViewById(R.id.progressBar2);
         buildProfilePresenter=new BuildProfileModel(BuildProfileActivity.this);
@@ -46,15 +53,52 @@ public class BuildProfileActivity extends AppCompatActivity implements BuildProf
             String number = user.getPhoneNumber();
             @Override
             public void onClick(View view) {
-                buildProfilePresenter.saveToDatabase(number,editText_bloodgroup.getText().toString(),editText_name.getText().toString(),editText_location.getText().toString());
-                Log.e(TAG,editText_bloodgroup.getText().toString()+" "+editText_name.getText().toString()+"  "+editText_location.getText().toString());
+                buildProfilePresenter.saveToDatabase(number,editText_bloodgroup.getText().toString(),editText_name.getText().toString(),"zz");
+                Log.e(TAG,editText_bloodgroup.getText().toString()+" "+editText_name.getText().toString()+"  "+"ss");
 
+            }
+        });
+
+        button_setLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
+
+                try {
+                    Intent intent =
+                            new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
+                                    .build(BuildProfileActivity.this);
+                    startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+                } catch (GooglePlayServicesRepairableException e) {
+                    // TODO: Handle the error.
+                    Log.e("hh",e.toString());
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    // TODO: Handle the error.
+                    Log.e("hh",e.toString());
+                }
             }
         });
 
 
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlaceAutocomplete.getPlace(this, data);
+                Log.i(TAG, "Place: " + place.getName());
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(this, data);
+                // TODO: Handle the error.
+                Log.i(TAG, status.getStatusMessage());
+
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
     }
 
     @Override
