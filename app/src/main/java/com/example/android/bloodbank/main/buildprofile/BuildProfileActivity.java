@@ -15,7 +15,6 @@ import com.example.android.bloodbank.R;
 import com.example.android.bloodbank.main.main.MainActivity;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +29,8 @@ public class BuildProfileActivity extends AppCompatActivity implements BuildProf
 
     String TAG = "BuildProfile Activity";
     ProgressBar progressBar;
+    Double latitude,longitude;
+    String city;
 
 
 
@@ -53,7 +54,7 @@ public class BuildProfileActivity extends AppCompatActivity implements BuildProf
             String number = user.getPhoneNumber();
             @Override
             public void onClick(View view) {
-                buildProfilePresenter.saveToDatabase(number,editText_bloodgroup.getText().toString(),editText_name.getText().toString(),"zz");
+                buildProfilePresenter.saveToDatabase(number,editText_bloodgroup.getText().toString(),editText_name.getText().toString(),city,latitude,longitude);
                 Log.e(TAG,editText_bloodgroup.getText().toString()+" "+editText_name.getText().toString()+"  "+"ss");
 
             }
@@ -90,13 +91,13 @@ public class BuildProfileActivity extends AppCompatActivity implements BuildProf
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(this, data);
                 Log.i(TAG, "Place: " + place.getName());
-            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
-                Status status = PlaceAutocomplete.getStatus(this, data);
-                // TODO: Handle the error.
-                Log.i(TAG, status.getStatusMessage());
 
-            } else if (resultCode == RESULT_CANCELED) {
-                // The user canceled the operation.
+                city = place.getName().toString();
+                latitude = (place.getLatLng().latitude);
+                longitude = (place.getLatLng().longitude);
+
+                Log.i(TAG, "Place: " + city + " lat " + latitude + "long" + longitude);
+
             }
         }
     }

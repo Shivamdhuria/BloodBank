@@ -1,12 +1,20 @@
 package com.example.android.bloodbank.main.buildprofile;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.core.GeoHash;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BuildProfileModel implements BuildProfilePresenter {
 
@@ -26,7 +34,7 @@ public class BuildProfileModel implements BuildProfilePresenter {
     }
 
     @Override
-    public void saveToDatabase(String number, String bloodGroup, String name, String location) {
+    public void saveToDatabase(String number, String bloodGroup, String name, String place,Double latitude,Double longitude) {
 
         //TODO Find errors in data entered and show if details incorrect
 
@@ -41,14 +49,26 @@ public class BuildProfileModel implements BuildProfilePresenter {
         String userID = currentFirebaseUser.getUid();
         Log.e(TAG,"USer Id  "+userID);
          DatabaseReference mDatabase;
-         UserModel userModel = new UserModel(number,bloodGroup,name,location);
+         UserModel userModel = new UserModel(number,bloodGroup,name,place);
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("users").child(userID).setValue(userModel, new DatabaseReference.CompletionListener() {
-            public void onComplete(DatabaseError error, DatabaseReference ref) {
+
+
+
+
+        GeoHash geoHash = new GeoHash(new GeoLocation(latitude, longitude));
+        Map<String, Object> updates = new HashMap<>();
+
+        updates.put("users/" + userID, userModel);
+        updates.put(bloodGroup+"/" +userID +  "/g", geoHash.getGeoHashString());
+        updates.put(bloodGroup+ "/" +userID +  "/l", Arrays.asList(latitude, longitude));
+        mDatabase.updateChildren(updates).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
 
                 //Hiding progress Bar after completion
                 buildProfileView.progressBarHide();
-                if(error!= null){
+                if(task== null){
                     //Database Push failed
                     buildProfileView.databaseNotWritten();
 
@@ -56,9 +76,12 @@ public class BuildProfileModel implements BuildProfilePresenter {
 
                     buildProfileView.databaseSuccessfullyWritten();
                 }
-            }
 
+
+            }
         });
+
+
 
     }
 }
