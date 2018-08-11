@@ -49,7 +49,7 @@ public class BuildProfileModel implements BuildProfilePresenter {
         String userID = currentFirebaseUser.getUid();
         Log.e(TAG,"USer Id  "+userID);
          DatabaseReference mDatabase;
-         UserModel userModel = new UserModel(number,bloodGroup,name,place);
+         UserModel userModel = new UserModel(number,bloodGroup,name,place,1);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
