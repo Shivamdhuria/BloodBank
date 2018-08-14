@@ -35,7 +35,8 @@
         <activity android:name=".main.newcampaign.NewCampaignActivity" />
         <activity
             android:name=".main.newcampaign.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".main.query.DonorQueryActivity"></activity>
     </application>
 
 </manifest>

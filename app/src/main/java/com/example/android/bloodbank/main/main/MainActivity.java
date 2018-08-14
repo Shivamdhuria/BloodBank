@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.example.android.bloodbank.R;
 import com.example.android.bloodbank.main.intro.IntroActivity;
+import com.example.android.bloodbank.main.newcampaign.NewCampaignActivity;
 import com.example.android.bloodbank.main.signin.SignInActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,11 +20,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     private FirebaseAuth mAuth;
+    FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        floatingActionButton = findViewById(R.id.fab);
 
 
         // Create the adapter that will return a fragment for each of the three
@@ -41,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                Intent intentNewCampaign = new Intent(getApplicationContext(), NewCampaignActivity.class);
+                startActivity(intentNewCampaign);
+
             }
         });
 
