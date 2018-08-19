@@ -63,6 +63,9 @@ public class NewCampaignActivity extends AppCompatActivity {
                 Intent intentMapsActivity = new Intent(this,MapsActivity.class);
                 Bundle bundle = new Bundle();
 
+                //TODO: Error for empty selection of bloodgroup
+
+                bundle.putString("bloodgroup",editText.getText().toString());
                 bundle.putString("place",city);
                 bundle.putDouble("latitude",latitude);
                 bundle.putDouble("longitude",longitude);

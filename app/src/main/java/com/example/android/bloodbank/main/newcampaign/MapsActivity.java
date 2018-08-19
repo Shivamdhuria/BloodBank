@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.SeekBar;
 
 import com.example.android.bloodbank.R;
+import com.example.android.bloodbank.main.query.DonorQueryActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -27,6 +30,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     int radius= 10;
     LatLng currentLocation;
     Circle circle;
+    Button button_search;
+    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +41,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         seekBar = findViewById(R.id.seekBar);
+        button_search = findViewById(R.id.button_search);
         seekBar.setMax(70);
         seekBar.setProgress(radius);
         mapFragment.getMapAsync(this);
         Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+        bundle = intent.getExtras();
 
         place = (String) bundle.get("place");
         latitude=bundle.getDouble("latitude");
@@ -64,6 +70,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
+            }
+        });
+
+        button_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentDonorQuery = new Intent(getApplicationContext(), DonorQueryActivity.class);
+                bundle.putInt("radius",radius);
+                intentDonorQuery.putExtras(bundle);
+                startActivity(intentDonorQuery);
             }
         });
     }
