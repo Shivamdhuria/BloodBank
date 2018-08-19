@@ -6,6 +6,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.android.bloodbank.R;
+import com.example.android.bloodbank.main.buildprofile.UserModel;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
+import com.firebase.geofire.GeoQueryEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class DonorQueryActivity extends AppCompatActivity {
 
@@ -24,50 +35,57 @@ public class DonorQueryActivity extends AppCompatActivity {
         Double longitude=bundle.getDouble("longitude");
 
         Log.e("DONOR query ",radius+bloodgroup+place+latitude.toString()+longitude);
+        SearchForDonors(bloodgroup,latitude,longitude,radius);
+
     }
 
-//    void SearchForDonors(String bloodgroup,Double latitude,Double logitude,int radius){
-//
-//
-//
-//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(bloodgroup);
-//        GeoFire geoFire = new GeoFire(ref);
-//        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(userLatitde, userLongitude), 1000);
-//        geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
-//            @Override
-//            public void onKeyEntered(String key, GeoLocation location) {
-//                //Any location key which is within 3km from the user's location will show up here as the key parameter in this method
-//                //You can fetch the actual data for this location by creating another firebase query here
-//                Query locationDataQuery = new FirebaseDatabase.getInstance().child("locations").child(key);
-//                locationDataQuery.addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        //The dataSnapshot should hold the actual data about the location
-//                        dataSnapshot.getChild("name").getValue(String.class); //should return the name of the location and dataSnapshot.getChild("description").getValue(String.class); //should return the description of the locations
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void onKeyExited(String key) {}
-//
-//            @Override
-//            public void onKeyMoved(String key, GeoLocation location) {}
-//
-//            @Override
-//            public void onGeoQueryReady() {
-//                //This method will be called when all the locations which are within 3km from the user's location has been loaded Now you can do what you wish with this data
-//            }
-//
-//            @Override
-//            public void onGeoQueryError(DatabaseError error) {
-//
-//            }
-//        });
-//    }
+    void SearchForDonors(String bloodgroup,Double latitude,Double longitude,int radius){
+
+
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(bloodgroup);
+        GeoFire geoFire = new GeoFire(ref);
+        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(latitude, longitude), radius);
+        geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+            @Override
+            public void onKeyEntered(String key, GeoLocation location) {
+                //Any location key which is within 3km from the user's location will show up here as the key parameter in this method
+                //You can fetch the actual data for this location by creating another firebase query here
+                Query locationDataQuery = reference.child("users").child(key);
+                locationDataQuery.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //The dataSnapshot should hold the actual data about the location
+                       // dataSnapshot.getChild("name").getValue(String.class);
+                        //should return the name of the location and dataSnapshot.getChild("description").getValue(String.class);
+                        // should return the description of the locations
+                        UserModel userModel = dataSnapshot.getValue(UserModel.class);
+                        String name = userModel.name;
+                        Log.e("DONOR",name);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onKeyExited(String key) {}
+
+            @Override
+            public void onKeyMoved(String key, GeoLocation location) {}
+
+            @Override
+            public void onGeoQueryReady() {
+                //This method will be called when all the locations which are within 3km from the user's location has been loaded Now you can do what you wish with this data
+            }
+
+            @Override
+            public void onGeoQueryError(DatabaseError error) {
+
+            }
+        });
+    }
 }
