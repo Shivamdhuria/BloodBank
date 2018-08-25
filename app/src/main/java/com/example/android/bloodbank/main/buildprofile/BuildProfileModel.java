@@ -34,7 +34,7 @@ public class BuildProfileModel implements BuildProfilePresenter {
     }
 
     @Override
-    public void saveToDatabase(String number, String bloodGroup, String name, String place,Double latitude,Double longitude) {
+    public void saveToDatabase(String number, String bloodGroup, String name, String place,int level,Double latitude,Double longitude) {
 
         //TODO Find errors in data entered and show if details incorrect
 
@@ -49,7 +49,7 @@ public class BuildProfileModel implements BuildProfilePresenter {
         String userID = currentFirebaseUser.getUid();
         Log.e(TAG,"USer Id  "+userID);
          DatabaseReference mDatabase;
-         UserModel userModel = new UserModel(number,bloodGroup,name,place,1);
+         UserModel userModel = new UserModel(number,bloodGroup,name,place,level);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 

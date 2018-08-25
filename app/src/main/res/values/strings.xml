@@ -32,7 +32,14 @@
         <item>AB+</item>
         <item>AB-</item>
     </string-array>
+
+    <string name="bloodgroup_hint">C+</string>
+    <string name="name_hint">John Doe</string>
+    <string name="level_hint">21</string>
+    <string name="address_hint">Dharamshala,India</string>
     <string name="title_activity_maps">Map</string>
+
+    <string name="notify_donors">Notify Donors</string>
 
 
 </resources>

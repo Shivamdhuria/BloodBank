@@ -20,4 +20,45 @@ public class UserModel {
         this.city=city;
         this.level=level;
     }
+
+    public String getName() {
+        return name;
+    }
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getBloodGroup() {
+        return bloodGroup;
+    }
+
+    public void setBloodGroup(String bloodGroup) {
+        this.bloodGroup = bloodGroup;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+
 }

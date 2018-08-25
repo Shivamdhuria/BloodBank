@@ -3,6 +3,9 @@ package com.example.android.bloodbank.main.query;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.example.android.bloodbank.R;
@@ -18,14 +21,22 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DonorQueryActivity extends AppCompatActivity {
 
     Bundle bundle;
+    private List<UserModel> userList = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private RecyclerViewAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donor_query);
+
+
         Intent intent = getIntent();
         bundle = intent.getExtras();
         int radius=bundle.getInt("radius");
@@ -35,6 +46,15 @@ public class DonorQueryActivity extends AppCompatActivity {
         Double longitude=bundle.getDouble("longitude");
 
         Log.e("DONOR query ",radius+bloodgroup+place+latitude.toString()+longitude);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
+        mAdapter = new RecyclerViewAdapter(userList);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(mAdapter);
+
+
         SearchForDonors(bloodgroup,latitude,longitude,radius);
 
     }
@@ -45,6 +65,7 @@ public class DonorQueryActivity extends AppCompatActivity {
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(bloodgroup);
         GeoFire geoFire = new GeoFire(ref);
+
         GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(latitude, longitude), radius);
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
@@ -61,18 +82,38 @@ public class DonorQueryActivity extends AppCompatActivity {
                         // should return the description of the locations
                         UserModel userModel = dataSnapshot.getValue(UserModel.class);
                         String name = userModel.name;
+                        // This method is called once with the initial value and again
+                        // whenever data at this location is updated.
+                        //TODO Remove user's AUTH from list
+                        userList.add(userModel);
+                        mAdapter.notifyDataSetChanged();
+
+
+                        Log.e("USERList",userList.toString()
+                        );
                         Log.e("DONOR",name);
+
                     }
+
+
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 
                     }
+
                 });
+
+
+
+
+
             }
 
             @Override
-            public void onKeyExited(String key) {}
+            public void onKeyExited(String key) {
+                mAdapter.notifyDataSetChanged();
+            }
 
             @Override
             public void onKeyMoved(String key, GeoLocation location) {}
@@ -80,6 +121,7 @@ public class DonorQueryActivity extends AppCompatActivity {
             @Override
             public void onGeoQueryReady() {
                 //This method will be called when all the locations which are within 3km from the user's location has been loaded Now you can do what you wish with this data
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -88,4 +130,7 @@ public class DonorQueryActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
 }
