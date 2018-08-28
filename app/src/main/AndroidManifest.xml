@@ -36,7 +36,12 @@
         <activity
             android:name=".main.newcampaign.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".main.query.DonorQueryActivity"></activity>
+        <activity android:name=".main.query.DonorQueryActivity" />
+        <activity android:name=".main.main.OneFragment" />
+        <activity
+            android:name=".main.main.TwoFragment"
+            android:label="@string/title_activity_two_fragment"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

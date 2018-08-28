@@ -40,6 +40,7 @@
     <string name="title_activity_maps">Map</string>
 
     <string name="notify_donors">Notify Donors</string>
+    <string name="title_activity_two_fragment">TwoFragment</string>
 
 
 </resources>
