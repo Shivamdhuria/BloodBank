@@ -2,6 +2,7 @@ package com.example.android.bloodbank.main.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,8 +10,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.example.android.bloodbank.R;
+import com.example.android.bloodbank.main.newcampaign.NewCampaignActivity;
 import com.example.android.bloodbank.main.signin.SignInActivity;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -39,6 +42,16 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.htab_tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newCampaignIntent = new Intent(getApplicationContext(), NewCampaignActivity.class);
+                startActivity(newCampaignIntent);
+            }
+        });
 
 
     }
