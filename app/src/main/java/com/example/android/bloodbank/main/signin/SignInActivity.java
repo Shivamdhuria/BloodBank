@@ -86,6 +86,7 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if (snapshot.child(uid).exists()) {
+
                     Intent intentMain = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intentMain);
 

@@ -1,5 +1,8 @@
 package com.example.android.bloodbank.main.buildprofile;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -26,6 +29,7 @@ public class BuildProfileModel implements BuildProfilePresenter {
 
 
 
+
     public BuildProfileModel(BuildProfileView buildProfileView) {
 
         this.buildProfileView= buildProfileView;
@@ -34,7 +38,7 @@ public class BuildProfileModel implements BuildProfilePresenter {
     }
 
     @Override
-    public void saveToDatabase(String number, String bloodGroup, String name, String place,int level,Double latitude,Double longitude) {
+    public void saveToDatabase(String number, String bloodGroup, String name, String place, int level, Double latitude, Double longitude, final Context context) {
 
         //TODO Find errors in data entered and show if details incorrect
 
@@ -49,7 +53,7 @@ public class BuildProfileModel implements BuildProfilePresenter {
         String userID = currentFirebaseUser.getUid();
         Log.e(TAG,"USer Id  "+userID);
          DatabaseReference mDatabase;
-         UserModel userModel = new UserModel(number,bloodGroup,name,place,level);
+         final UserModel userModel = new UserModel(number,bloodGroup,name,place,level);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -65,7 +69,14 @@ public class BuildProfileModel implements BuildProfilePresenter {
         mDatabase.updateChildren(updates).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
+                //Saving name in Shared Preference
 
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+                SharedPreferences.Editor editor = prefs.edit();
+//Give any name for //preference as I have given "IDvalue" and value 0.
+
+                editor.putString("name", userModel.name);
+                editor.apply();
                 //Hiding progress Bar after completion
                 buildProfileView.progressBarHide();
                 if(task== null){

@@ -54,7 +54,7 @@ public class BuildProfileActivity extends AppCompatActivity implements BuildProf
             String number = user.getPhoneNumber();
             @Override
             public void onClick(View view) {
-                buildProfilePresenter.saveToDatabase(number,editText_bloodgroup.getText().toString(),editText_name.getText().toString(),city,0,latitude,longitude);
+                buildProfilePresenter.saveToDatabase(number,editText_bloodgroup.getText().toString(),editText_name.getText().toString(),city,0,latitude,longitude,getApplicationContext());
                 Log.e(TAG,editText_bloodgroup.getText().toString()+" "+editText_name.getText().toString()+"  "+"ss");
 
             }
