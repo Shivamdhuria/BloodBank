@@ -42,6 +42,9 @@
     <string name="notify_donors">Notify Donors</string>
     <string name="title_activity_two_fragment">TwoFragment</string>
 
+    <string name="name_default">John Doe</string>
+    <string name="level_default">21</string>
+
 
 </resources>
 

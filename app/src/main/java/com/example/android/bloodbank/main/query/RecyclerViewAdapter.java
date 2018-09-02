@@ -11,11 +11,11 @@ import com.example.android.bloodbank.main.buildprofile.UserModel;
 
 import java.util.List;
 
-class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private List<UserModel> userList;
 
-    RecyclerViewAdapter(List<UserModel> userList) {
-        this.userList = userList;
+    public RecyclerViewAdapter(List<UserModel> requestModelList) {
+        this.userList = requestModelList;
     }
 
     @Override

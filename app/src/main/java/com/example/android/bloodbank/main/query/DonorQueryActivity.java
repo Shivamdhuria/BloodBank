@@ -76,7 +76,7 @@ public class DonorQueryActivity extends AppCompatActivity {
                 //Get value of name from Shared Pref
                 final SharedPreferences mSharedPreference= PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 String name=(mSharedPreference.getString("name", ""));
-                RequestModel requestModel = new RequestModel(name,bloodgroup,epoch,place);
+                RequestModel requestModel = new RequestModel(name,bloodgroup,epoch,place,false);
 
                 //TODO corner case if donor list empty
                 int totalDonors = donorList.size();
