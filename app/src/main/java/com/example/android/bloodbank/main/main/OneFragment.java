@@ -47,6 +47,7 @@ public class OneFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
 
 
+
     }
 
     @Override
@@ -71,7 +72,10 @@ public class OneFragment extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
-        initView();
+        if(mAuth.getCurrentUser()!=null){
+            initView();
+        }
+
     }
 
 

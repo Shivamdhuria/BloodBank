@@ -55,8 +55,11 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.htab_tabs);
         tabLayout.setupWithViewPager(viewPager);
+        mAuth=FirebaseAuth.getInstance();
+
         // Check if user is signed in (non-null) and update UI accordingly.
         checkIfFirstTime();
+        //Check if
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -70,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 
 
 
