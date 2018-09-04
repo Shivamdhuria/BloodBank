@@ -11,9 +11,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.android.bloodbank.R;
 import com.example.android.bloodbank.main.buildprofile.UserModel;
+import com.example.android.bloodbank.main.main.MainActivity;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
@@ -40,11 +43,17 @@ public class DonorQueryActivity extends AppCompatActivity {
     List<String> donorList = new ArrayList<>();
     Button button_request;
     FirebaseAuth mAuth;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donor_query);
+        //Initialized Progress Bar
+        progressBar = findViewById(R.id.progressBar1);
+
+
+
         mAuth = FirebaseAuth.getInstance();
 
         button_request=findViewById(R.id.button_request);
@@ -79,11 +88,19 @@ public class DonorQueryActivity extends AppCompatActivity {
                 RequestModel requestModel = new RequestModel(name,bloodgroup,epoch,place,false);
 
                 //TODO corner case if donor list empty
+
+
+                //TODO find when sent to all?
                 int totalDonors = donorList.size();
                 for(int i = 0 ;i<totalDonors;i++){
                  mDatabase.child(donorList.get(i)).child(mAuth.getUid()).setValue(requestModel);
                 }
+                Intent intentMain = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intentMain);
+                finish();
+                Toast.makeText(getApplicationContext(),"Donor Request Sent",Toast.LENGTH_LONG).show();
             }
+
         });
 
     }
@@ -120,6 +137,7 @@ public class DonorQueryActivity extends AppCompatActivity {
                         donorList.add(key);
 
                         mAdapter.notifyDataSetChanged();
+                        progressBar.setVisibility(View.INVISIBLE);
 
 
                         Log.e("USERList",userList.toString()

@@ -1,4 +1,4 @@
-package com.example.android.bloodbank.main.main;
+package com.example.android.bloodbank.main.main.OneFragment;
 
 
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.android.bloodbank.R;
 import com.example.android.bloodbank.main.query.RequestModel;
@@ -30,7 +31,9 @@ public class OneFragment extends Fragment {
     private RecyclerView recyclerView;
     public RequestAdapter mAdapter;
     List<RequestModel> mRequestList;
-    FirebaseAuth mAuth;
+    List<String> keysUID;
+    public FirebaseAuth mAuth;
+    ProgressBar progressBar;
 
 
 
@@ -44,6 +47,7 @@ public class OneFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
          mRequestList= new ArrayList<>();
+         keysUID = new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
 
 
@@ -67,7 +71,9 @@ public class OneFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view_one_frag);
-        mAdapter = new RequestAdapter(mRequestList);
+        progressBar = view.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
+        mAdapter = new RequestAdapter(mRequestList,keysUID);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -87,12 +93,17 @@ public class OneFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mRequestList.clear();
+                keysUID.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     RequestModel requestModel = dataSnapshot1.getValue(RequestModel.class);
                     mRequestList.add(requestModel);
+                    //To store requests user's Key
+                    keysUID.add(dataSnapshot.getKey());
+
                 }
 
                 mAdapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.INVISIBLE);
             }
 
 
@@ -105,5 +116,7 @@ public class OneFragment extends Fragment {
             }
         });
     }
+
+
 
 }

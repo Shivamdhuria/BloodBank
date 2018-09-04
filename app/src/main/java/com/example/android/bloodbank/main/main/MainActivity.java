@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -19,7 +20,10 @@ import android.view.View;
 import com.example.android.bloodbank.R;
 import com.example.android.bloodbank.main.buildprofile.UserModel;
 import com.example.android.bloodbank.main.intro.IntroActivity;
+import com.example.android.bloodbank.main.main.OneFragment.OneFragment;
+import com.example.android.bloodbank.main.main.TwoFragment.TwoFragment;
 import com.example.android.bloodbank.main.newcampaign.NewCampaignActivity;
+import com.example.android.bloodbank.main.query.RequestModel;
 import com.example.android.bloodbank.main.signin.SignInActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
+    UserModel userModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.htab_tabs);
         tabLayout.setupWithViewPager(viewPager);
-        mAuth=FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         // Check if user is signed in (non-null) and update UI accordingly.
         checkIfFirstTime();
@@ -153,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
             mDatabaseRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                   UserModel userModel = dataSnapshot.getValue(UserModel.class);
+                    userModel = dataSnapshot.getValue(UserModel.class);
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                     SharedPreferences.Editor editor = prefs.edit();
 //Give any name for //preference as I have given "IDvalue" and value 0.
@@ -179,6 +184,22 @@ public class MainActivity extends AppCompatActivity {
             Intent intentLogin = new Intent(this, SignInActivity.class);
             startActivity(intentLogin);
         }
+
+    }
+    //
+   public void sendResponse(final String requestKey, RequestModel requestModel) {
+       DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
+
+
+       mDatabase.child("responses").child("A+").child(requestKey).child(mAuth.getUid()).setValue(userModel, new DatabaseReference.CompletionListener() {
+           @Override
+           public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+               Log.e("MainA",requestKey);
+           }
+       });
+
+
 
     }
 }
