@@ -23,7 +23,6 @@ import com.example.android.bloodbank.main.intro.IntroActivity;
 import com.example.android.bloodbank.main.main.OneFragment.OneFragment;
 import com.example.android.bloodbank.main.main.TwoFragment.TwoFragment;
 import com.example.android.bloodbank.main.newcampaign.NewCampaignActivity;
-import com.example.android.bloodbank.main.query.RequestModel;
 import com.example.android.bloodbank.main.signin.SignInActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -187,15 +186,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
     //
-   public void sendResponse(final String requestKey, RequestModel requestModel) {
+   public void sendResponse(final String requestKey) {
        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mAuth=FirebaseAuth.getInstance();
 
 
-
-       mDatabase.child("responses").child("A+").child(requestKey).child(mAuth.getUid()).setValue(userModel, new DatabaseReference.CompletionListener() {
+       mDatabase.child("responses").child("A+").child(requestKey).setValue(mAuth.getUid(), new DatabaseReference.CompletionListener() {
            @Override
            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-               Log.e("MainA",requestKey);
+               Log.e("MainActiity.Written",mAuth.getUid());
            }
        });
 

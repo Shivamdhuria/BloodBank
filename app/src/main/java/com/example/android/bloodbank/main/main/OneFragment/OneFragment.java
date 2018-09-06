@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ public class OneFragment extends Fragment {
     List<String> keysUID;
     public FirebaseAuth mAuth;
     ProgressBar progressBar;
+    public String donorId;
 
 
 
@@ -88,7 +90,7 @@ public class OneFragment extends Fragment {
     private void initView() {
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mDatabase = mFirebaseInstance.getReference().child("requests").child("A+").child(mAuth.getUid());
-
+        donorId=mAuth.getUid();
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -98,12 +100,13 @@ public class OneFragment extends Fragment {
                     RequestModel requestModel = dataSnapshot1.getValue(RequestModel.class);
                     mRequestList.add(requestModel);
                     //To store requests user's Key
-                    keysUID.add(dataSnapshot.getKey());
+                    keysUID.add(dataSnapshot1.getKey());
 
                 }
 
                 mAdapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.INVISIBLE);
+
             }
 
 
@@ -117,6 +120,16 @@ public class OneFragment extends Fragment {
         });
     }
 
+    public void removeRequest(String bloodRequired,String requestKey){
+        Log.e("donorid",FirebaseAuth.getInstance().getUid());
+        Log.e("requesteeee",requestKey);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("requests").child(bloodRequired).child(FirebaseAuth.getInstance().getUid()).child(requestKey);
+        databaseReference.removeValue();
 
 
+    }
+
+    public FirebaseAuth getmAuth() {
+        return mAuth;
+    }
 }

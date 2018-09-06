@@ -2,6 +2,7 @@ package com.example.android.bloodbank.main.main.OneFragment;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +21,11 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
     private List<RequestModel> requestList;
     private List<String> keysUID;
 
+
     RequestAdapter(List<RequestModel> requestList,List<String> keysUID) {
         this.requestList = requestList;
         this.keysUID=keysUID;
+
     }
 
     @NonNull
@@ -35,6 +38,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
     public void onBindViewHolder(@NonNull RequestAdapter.ViewHolder holder, int position) {
         final RequestModel requestModel = requestList.get(position);
         final String requestKey = keysUID.get(position);
+        Log.e("KeysUID",keysUID.toString());
         holder.name.setText(requestModel.name);
         holder.place.setText(requestModel.placeOfCampaign);
 
@@ -46,7 +50,9 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
                 if(b==true){
                     //Send  response firebase
                     MainActivity mainActivity = new MainActivity();
-                    mainActivity.sendResponse(requestKey,requestModel);
+                    mainActivity.sendResponse(requestKey);
+                    OneFragment oneFragment = new OneFragment();
+                    oneFragment.removeRequest(requestModel.bloodRequired,requestKey);
 
                 }
             }
