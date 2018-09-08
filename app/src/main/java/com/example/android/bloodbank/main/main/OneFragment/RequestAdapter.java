@@ -50,8 +50,11 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
                 if(b==true){
                     //Send  response firebase
                     MainActivity mainActivity = new MainActivity();
+                    //Sending user's UID to donor for phone number sharing
                     mainActivity.sendResponse(requestKey);
                     OneFragment oneFragment = new OneFragment();
+                    //Remove the request as it's confirmed
+
                     oneFragment.removeRequest(requestModel.bloodRequired,requestKey);
 
                 }

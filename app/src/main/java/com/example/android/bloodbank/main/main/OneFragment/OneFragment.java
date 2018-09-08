@@ -24,6 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class OneFragment extends Fragment {
     private FirebaseDatabase mFirebaseInstance;
@@ -123,8 +125,17 @@ public class OneFragment extends Fragment {
     public void removeRequest(String bloodRequired,String requestKey){
         Log.e("donorid",FirebaseAuth.getInstance().getUid());
         Log.e("requesteeee",requestKey);
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("requests").child(bloodRequired).child(FirebaseAuth.getInstance().getUid()).child(requestKey);
-        databaseReference.removeValue();
+
+
+        //delay
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                // this code will be executed after 2 seconds
+            }
+        }, 2000);
+//        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("requests").child(bloodRequired).child(FirebaseAuth.getInstance().getUid()).child(requestKey);
+//        databaseReference.removeValue();
 
 
     }
