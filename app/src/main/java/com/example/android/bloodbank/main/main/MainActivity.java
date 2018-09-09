@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.android.bloodbank.R;
 import com.example.android.bloodbank.main.buildprofile.UserModel;
@@ -44,12 +45,15 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     FirebaseAuth mAuth;
     UserModel userModel;
+    TextView textviewLevel,textviewName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.htab_toolbar);
+        textviewLevel = findViewById(R.id.textView_level);
+        textviewName=findViewById(R.id.textView_name);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -164,6 +168,10 @@ public class MainActivity extends AppCompatActivity {
 
                     editor.putString("name", userModel.name);
                     editor.apply();
+
+                    //Display name and level
+                    textviewLevel.setText(String.valueOf(userModel.level));
+                    textviewName.setText(userModel.name);
 
                     Log.e("MainActivity", (String.valueOf(userModel.level)+ userModel.name));
                 }

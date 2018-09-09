@@ -28,9 +28,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         UserModel userModel = userList.get(position);
         holder.name.setText(userModel.name);
         holder.place.setText(userModel.city);
-
         holder.bloodgroup.setText(userModel.bloodGroup);
-       // holder.level.setText(userModel.level);
+        holder.level.setText(String.valueOf(userModel.level));
     }
 
     @Override

@@ -134,8 +134,8 @@ public class OneFragment extends Fragment {
                 // this code will be executed after 2 seconds
             }
         }, 2000);
-//        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("requests").child(bloodRequired).child(FirebaseAuth.getInstance().getUid()).child(requestKey);
-//        databaseReference.removeValue();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("requests").child(bloodRequired).child(FirebaseAuth.getInstance().getUid()).child(requestKey);
+        databaseReference.removeValue();
 
 
     }

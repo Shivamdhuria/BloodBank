@@ -50,21 +50,20 @@
 
     <ImageButton
         android:id="@+id/callButton"
-        style="@android:style/Widget.DeviceDefault.ImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="42dp"
+        android:layout_height="44dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        app:srcCompat="@android:drawable/stat_sys_phone_call" />
+        android:background="@android:drawable/sym_action_call" />
 
-    <EditText
-        android:id="@+id/editText2"
+    <TextView
+        android:id="@+id/level"
         android:layout_width="28dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toStartOf="@+id/callButton"
         android:ems="10"
-        android:inputType="number"
-        android:text="22" />
+
+        android:text="@string/level_default" />
 
 </RelativeLayout>

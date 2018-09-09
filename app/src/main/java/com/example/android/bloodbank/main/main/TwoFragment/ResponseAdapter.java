@@ -1,10 +1,14 @@
 package com.example.android.bloodbank.main.main.TwoFragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.android.bloodbank.R;
@@ -40,7 +44,21 @@ public class ResponseAdapter extends RecyclerView.Adapter<com.example.android.bl
         holder.name.setText(userModel.name);
         holder.place.setText(userModel.city);
 
-//        holder.bloodgroup.setText();
+        holder.bloodgroup.setText(userModel.bloodGroup);
+        holder.level.setText(String.valueOf(userModel.level));
+        holder.callButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    //Open Dialer Activity
+                TwoFragment twoFragment = new TwoFragment();
+                //twoFragment.startDialerActivity(userModel.phoneNumber);
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+ userModel.phoneNumber));
+                Log.e("Phone mnbr",userModel.phoneNumber);
+                view.getContext().startActivity(intent);
+            }
+        });
+
 
     }
 
@@ -51,13 +69,15 @@ public class ResponseAdapter extends RecyclerView.Adapter<com.example.android.bl
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView name,place,level,bloodgroup;
+        public ImageButton callButton;
 
         public ViewHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.name);
             place = (TextView) itemView.findViewById(R.id.place);
-//            level = (TextView) itemView.findViewById(R.id.level);
+           level = (TextView) itemView.findViewById(R.id.level);
             bloodgroup =(TextView)itemView.findViewById(R.id.bloodgroup);
+            callButton=itemView.findViewById(R.id.callButton);
 
         }
     }

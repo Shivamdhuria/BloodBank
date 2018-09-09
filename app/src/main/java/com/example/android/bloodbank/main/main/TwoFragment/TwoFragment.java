@@ -1,6 +1,8 @@
 package com.example.android.bloodbank.main.main.TwoFragment;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -79,6 +81,8 @@ public class TwoFragment extends Fragment {
         if (mAuth.getCurrentUser() != null) {
             LoadDonorUid();
         }
+
+
 
     }
 
@@ -185,5 +189,12 @@ public class TwoFragment extends Fragment {
         });
 
 
+    }
+
+
+    public void startDialerActivity(String phoneNumber){
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse(phoneNumber));
+        startActivity(intent);
     }
 }

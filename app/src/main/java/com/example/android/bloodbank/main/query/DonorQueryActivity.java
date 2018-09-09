@@ -132,10 +132,12 @@ public class DonorQueryActivity extends AppCompatActivity {
                         // This method is called once with the initial value and again
                         // whenever data at this location is updated.
                         //TODO Remove user's AUTH from list
-                        userList.add(userModel);
-                        //Adding donorId to the list for requests database
-                        donorList.add(key);
+                        if(!key.equals(FirebaseAuth.getInstance().getUid())) {
+                            userList.add(userModel);
+                            //Adding donorId to the list for requests database
 
+                            donorList.add(key);
+                        }
                         mAdapter.notifyDataSetChanged();
                         progressBar.setVisibility(View.INVISIBLE);
 
