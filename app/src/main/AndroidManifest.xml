@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.bloodbank">
+    package="com.elixer.bloodbank">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".main.main.MainActivity"
+            android:name=".main.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,21 +22,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".main.intro.IntroActivity"
+            android:name=".intro.IntroActivity"
             android:theme="@style/AppIntro" />
-        <activity android:name=".main.signin.SignInActivity" />
-        <activity android:name=".main.buildprofile.BuildProfileActivity" />
-        <activity android:name=".main.SetLocationActivity" />
+        <activity android:name=".signin.SignInActivity" />
+        <activity android:name=".buildprofile.BuildProfileActivity" />
+        <activity android:name=".SetLocationActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAINAWSyejBpJ_FdfCXD57yOg9RWvzwdtQ" />
 
-        <activity android:name=".main.newcampaign.NewCampaignActivity" />
+        <activity android:name="newcampaign.NewCampaignActivity" />
         <activity
-            android:name=".main.newcampaign.MapsActivity"
+            android:name=".newcampaign.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".main.query.DonorQueryActivity" />
+        <activity android:name=".query.DonorQueryActivity" />
 
     </application>
 
