@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.aigestudio.wheelpicker.WheelPicker;
 import com.elixer.bloodbank.R;
 import com.elixer.bloodbank.main.MainActivity;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -20,17 +21,22 @@ import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Arrays;
+import java.util.List;
+
 
 public class BuildProfileActivity extends AppCompatActivity implements BuildProfileView{
     Spinner spinner_blood_group;
     Button button_save,button_setLocation;
-    EditText editText_bloodgroup,editText_name;
+    EditText editText_name;
     BuildProfilePresenter buildProfilePresenter;
 
     String TAG = "BuildProfile Activity";
     ProgressBar progressBar;
     Double latitude,longitude;
     String city;
+    List<String> bloodgroups;
+    private WheelPicker wheel;
 
 
 
@@ -41,9 +47,13 @@ public class BuildProfileActivity extends AppCompatActivity implements BuildProf
         button_save=findViewById(R.id.button_save);
         button_setLocation=findViewById(R.id.button_location);
 
-        editText_bloodgroup=findViewById(R.id.editText_bloodgroup);
+
 
         editText_name=findViewById(R.id.editText_name);
+        bloodgroups = Arrays.asList(getResources().getStringArray(R.array.blood_groups));
+
+        wheel = (WheelPicker) findViewById(R.id.main_wheel);
+        wheel.setData(bloodgroups);
         progressBar=findViewById(R.id.progressBar2);
         buildProfilePresenter=new BuildProfileModel(BuildProfileActivity.this);
 
@@ -54,8 +64,9 @@ public class BuildProfileActivity extends AppCompatActivity implements BuildProf
             String number = user.getPhoneNumber();
             @Override
             public void onClick(View view) {
-                buildProfilePresenter.saveToDatabase(number,editText_bloodgroup.getText().toString(),editText_name.getText().toString(),city,0,latitude,longitude,getApplicationContext());
-                Log.e(TAG,editText_bloodgroup.getText().toString()+" "+editText_name.getText().toString()+"  "+"ss");
+                String bloodtype = bloodgroups.get(wheel.getCurrentItemPosition());
+                buildProfilePresenter.saveToDatabase(number,bloodtype,editText_name.getText().toString(),city,0,latitude,longitude,getApplicationContext());
+                Log.e(TAG,bloodtype +" "+editText_name.getText().toString()+"  "+"ss");
 
             }
         });

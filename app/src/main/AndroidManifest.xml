@@ -32,7 +32,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAINAWSyejBpJ_FdfCXD57yOg9RWvzwdtQ" />
 
-        <activity android:name="newcampaign.NewCampaignActivity" />
+        <activity android:name=".newcampaign.NewCampaignActivity" />
         <activity
             android:name=".newcampaign.MapsActivity"
             android:label="@string/title_activity_maps" />

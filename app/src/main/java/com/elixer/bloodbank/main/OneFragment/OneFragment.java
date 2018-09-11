@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.elixer.bloodbank.R;
 import com.elixer.bloodbank.query.RequestModel;
@@ -38,6 +39,7 @@ public class OneFragment extends Fragment {
     public FirebaseAuth mAuth;
     ProgressBar progressBar;
     public String donorId;
+    TextView textViewRequestEmpty;
 
 
 
@@ -50,6 +52,7 @@ public class OneFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
          mRequestList= new ArrayList<>();
          keysUID = new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
@@ -76,7 +79,8 @@ public class OneFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view_one_frag);
         progressBar = view.findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.VISIBLE);
+        textViewRequestEmpty=view.findViewById(R.id.textViewRequest);
+
         mAdapter = new RequestAdapter(mRequestList,keysUID);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -84,6 +88,7 @@ public class OneFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
         if(mAuth.getCurrentUser()!=null){
             initView();
+            setTextView(mRequestList.size());
         }
 
     }
@@ -93,6 +98,7 @@ public class OneFragment extends Fragment {
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mDatabase = mFirebaseInstance.getReference().child("requests").child("A+").child(mAuth.getUid());
         donorId=mAuth.getUid();
+        progressBar.setVisibility(View.VISIBLE);
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -107,7 +113,8 @@ public class OneFragment extends Fragment {
                 }
 
                 mAdapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.INVISIBLE);
+
+                setTextView(mRequestList.size());
 
             }
 
@@ -120,6 +127,16 @@ public class OneFragment extends Fragment {
 
             }
         });
+
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    private void setTextView(int size) {
+        if(size==0){
+            textViewRequestEmpty.setVisibility(View.VISIBLE);
+        }else{
+            textViewRequestEmpty.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void removeRequest(String bloodRequired,String requestKey){

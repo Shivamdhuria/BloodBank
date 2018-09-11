@@ -10,6 +10,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp" />
 
+    <TextView
+        android:id="@+id/textViewRequest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:text="@string/request_empty"
+        android:textAlignment="center"
+        android:visibility="invisible" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_one_frag"
         android:layout_width="match_parent"

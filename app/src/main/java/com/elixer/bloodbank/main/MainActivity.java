@@ -50,13 +50,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.htab_toolbar);
         textviewLevel = findViewById(R.id.textView_level);
         textviewName=findViewById(R.id.textView_name);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         viewPager = (ViewPager) findViewById(R.id.htab_viewpager);
         setupViewPager(viewPager);

@@ -6,8 +6,8 @@ android {
         applicationId 'com.elixer.bloodbank'
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "3.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -41,6 +41,7 @@ dependencies {
     //GeoFire
     implementation 'com.firebase:geofire-android:2.3.1'
     implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'cn.aigestudio.wheelpicker:WheelPicker:1.1.2'
 }
 
 apply plugin: 'com.google.gms.google-services'

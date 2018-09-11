@@ -8,11 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.aigestudio.wheelpicker.WheelPicker;
 import com.elixer.bloodbank.R;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class NewCampaignActivity extends AppCompatActivity {
     Button button;
@@ -20,12 +24,17 @@ public class NewCampaignActivity extends AppCompatActivity {
     Double latitude,longitude;
     String city;
     String TAG = "NewCampaign";
+    List<String> bloodgroups;
+    private WheelPicker wheel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_campaign);
         button = findViewById(R.id.button);
-        editText = findViewById(R.id.editText);
+        bloodgroups = Arrays.asList(getResources().getStringArray(R.array.blood_groups));
+
+        wheel = (WheelPicker) findViewById(R.id.main_wheel);
+        wheel.setData(bloodgroups);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,15 +73,15 @@ public class NewCampaignActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
 
                 //TODO: Error for empty selection of bloodgroup
-
-                bundle.putString("bloodgroup",editText.getText().toString());
+                String bloodtype = bloodgroups.get(wheel.getCurrentItemPosition());
+                bundle.putString("bloodgroup",bloodtype);
                 bundle.putString("place",city);
                 bundle.putDouble("latitude",latitude);
                 bundle.putDouble("longitude",longitude);
                 intentMapsActivity.putExtras(bundle);
                 startActivity(intentMapsActivity);
 
-                Log.i(TAG, "Place: " + city + " lat " + latitude + "long" + longitude);
+                Log.e(TAG, "Place: " + city + " lat " + latitude + "long" + longitude + "  "+bloodtype);
 
             }
         }

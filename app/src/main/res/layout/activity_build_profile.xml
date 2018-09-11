@@ -4,38 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.buildprofile.BuildProfileActivity"
+    xmlns:aigestudio="http://schemas.android.com/apk/res-auto"
+    tools:context="buildprofile.BuildProfileActivity"
     tools:layout_editor_absoluteY="81dp">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/bloodgroup"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editText_bloodgroup"
-        android:layout_width="wrap_content"
-        android:layout_height="42dp"
+    <com.aigestudio.wheelpicker.WheelPicker
+        android:id="@+id/main_wheel"
+        android:layout_width="0dp"
+        android:layout_height="154dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="AB+"
-        android:inputType="textPersonName"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button.Custom"
-        android:textColor="@color/colorAccent"
-        android:textSize="18sp"
+        android:background="@color/colorBackground"
+        aigestudio:wheel_atmospheric="true"
+        aigestudio:wheel_curved="true"
+        aigestudio:wheel_cyclic="true"
+        aigestudio:wheel_item_align="center"
+        aigestudio:wheel_item_text_color="@color/colorPrimary"
+        aigestudio:wheel_item_text_size="24sp"
+        aigestudio:wheel_selected_item_text_color="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -46,13 +35,16 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="20dp"
         android:text="@string/location"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
+
+
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_name" />
+        app:layout_constraintTop_toBottomOf="@+id/main_wheel" />
 
     <TextView
         android:id="@+id/textView_nam"
@@ -60,13 +52,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="60dp"
         android:text="@string/name"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_bloodgroup" />
+        tools:layout_editor_absoluteY="16dp" />
 
     <EditText
         android:id="@+id/editText_name"
@@ -87,41 +79,62 @@
 
     <Button
         android:id="@+id/button_save"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Button"
+        android:text="@string/next"
         android:theme="@style/PrimaryButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_location" />
+        app:layout_constraintTop_toBottomOf="@+id/button_location"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ProgressBar
         android:id="@+id/progressBar2"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="36dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:visibility="invisible" />
 
     <Button
         android:id="@+id/button_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Button"
+        android:text="@string/setlocation"
+        app:layout_constraintBottom_toTopOf="@+id/button_location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/bloodgroup"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_name" />
 
 
     <!--<com.gcherubini.animatedtextcarousel.AnimatedTextCarouselViewPager-->

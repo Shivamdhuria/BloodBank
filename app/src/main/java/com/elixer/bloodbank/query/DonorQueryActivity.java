@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.elixer.bloodbank.R;
@@ -44,6 +45,7 @@ public class DonorQueryActivity extends AppCompatActivity {
     Button button_request;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
+    TextView textViewEmpty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class DonorQueryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_donor_query);
         //Initialized Progress Bar
         progressBar = findViewById(R.id.progressBar1);
+        textViewEmpty= findViewById(R.id.textViewEmpty);
 
 
 
@@ -76,6 +79,8 @@ public class DonorQueryActivity extends AppCompatActivity {
 
 
         SearchForDonors(bloodgroup,latitude,longitude,radius);
+
+        setTextView(donorList.size());
 
         button_request.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,6 +145,7 @@ public class DonorQueryActivity extends AppCompatActivity {
                         }
                         mAdapter.notifyDataSetChanged();
                         progressBar.setVisibility(View.INVISIBLE);
+                        setTextView(donorList.size());
 
 
                         Log.e("USERList",userList.toString()
@@ -147,6 +153,7 @@ public class DonorQueryActivity extends AppCompatActivity {
                         Log.e("DONOR",name);
 
                     }
+
 
 
 
@@ -159,7 +166,7 @@ public class DonorQueryActivity extends AppCompatActivity {
 
 
 
-
+                progressBar.setVisibility(View.INVISIBLE);
 
             }
 
@@ -183,6 +190,14 @@ public class DonorQueryActivity extends AppCompatActivity {
 
             }
         });
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+    private void setTextView(int size) {
+        if(size==0){
+            textViewEmpty.setVisibility(View.VISIBLE);
+        }else{
+            textViewEmpty.setVisibility(View.INVISIBLE);
+        }
     }
 
 

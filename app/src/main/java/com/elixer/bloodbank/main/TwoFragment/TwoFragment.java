@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.elixer.bloodbank.R;
 import com.elixer.bloodbank.buildprofile.UserModel;
@@ -38,6 +39,7 @@ public class TwoFragment extends Fragment {
     public FirebaseAuth mAuth;
     ProgressBar progressBar;
     public String donorId;
+    TextView textViewResponse;
 
 
     public TwoFragment() {
@@ -71,7 +73,9 @@ public class TwoFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_two_frag);
         progressBar = view.findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.VISIBLE);
+
+        textViewResponse=view.findViewById(R.id.textViewResponse);
+      //  textViewResponse.setVisibility(View.VISIBLE);
         //TODO atach adapter
           mAdapter = new ResponseAdapter(mDonorList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -80,47 +84,14 @@ public class TwoFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
         if (mAuth.getCurrentUser() != null) {
             LoadDonorUid();
+            setTextView(mDonorList.size());
         }
 
 
 
     }
 
-//    private void LoadDonorNumbers() {
-//        mFirebaseInstance = FirebaseDatabase.getInstance();
-//
-//
-//        mDatabase = mFirebaseInstance.getReference().child("users").child("A+").child(mAuth.getUid());
-//
-//        mDatabase.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                mRequestList.clear();
-//                keysUID.clear();
-//                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-//                    RequestModel requestModel = dataSnapshot1.getValue(RequestModel.class);
-//                    mRequestList.add(requestModel);
-//                    //To store requests user's Key
-//                    keysUID.add(dataSnapshot1.getKey());
-//
-//                }
-//
-//                mAdapter.notifyDataSetChanged();
-//                progressBar.setVisibility(View.INVISIBLE);
-//
-//            }
 
-
-
-//
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//    }
 
     private void LoadDonorUid() {
         mFirebaseInstance = FirebaseDatabase.getInstance();
@@ -132,6 +103,7 @@ public class TwoFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mDonorList.clear();
+                progressBar.setVisibility(View.VISIBLE);
 
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
@@ -142,6 +114,7 @@ public class TwoFragment extends Fragment {
                     DatabaseReference mUserDatabase = FirebaseDatabase.getInstance().getReference();
                     Query locationDataQuery = mUserDatabase.child("users").child(donorUid);
                     locationDataQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             //The dataSnapshot should hold the actual data about the location
@@ -158,7 +131,7 @@ public class TwoFragment extends Fragment {
 
 
                             mAdapter.notifyDataSetChanged();
-                            progressBar.setVisibility(View.INVISIBLE);
+
 
 
                             Log.e("DONOR",name);
@@ -177,8 +150,7 @@ public class TwoFragment extends Fragment {
                     });
 
                 }
-
-
+                progressBar.setVisibility(View.INVISIBLE);
 
             }
 
@@ -189,6 +161,14 @@ public class TwoFragment extends Fragment {
         });
 
 
+    }
+
+    private void setTextView(int size) {
+        if(size==0){
+            textViewResponse.setVisibility(View.VISIBLE);
+        }else{
+            textViewResponse.setVisibility(View.INVISIBLE);
+        }
     }
 
 
