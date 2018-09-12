@@ -54,7 +54,7 @@ public class BuildProfileActivity extends AppCompatActivity implements BuildProf
 
         wheel = (WheelPicker) findViewById(R.id.main_wheel);
         wheel.setData(bloodgroups);
-        progressBar=findViewById(R.id.progressBar2);
+         progressBar=findViewById(R.id.progressBarLoad);
         buildProfilePresenter=new BuildProfileModel(BuildProfileActivity.this);
 
 
@@ -139,7 +139,7 @@ public class BuildProfileActivity extends AppCompatActivity implements BuildProf
 
     @Override
     public void progressBarView() {
-        progressBar.setVisibility(View.VISIBLE);
+       progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override

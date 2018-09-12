@@ -6,8 +6,8 @@ android {
         applicationId 'com.elixer.bloodbank'
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 3
-        versionName "3.0"
+        versionCode 4
+        versionName "4.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -17,6 +17,12 @@ android {
         }
     }
     productFlavors {
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
     }
 }
 

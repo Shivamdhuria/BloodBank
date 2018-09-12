@@ -47,7 +47,7 @@ public class BuildProfileModel implements BuildProfilePresenter {
         //else save this to firebase
 
         //showing progress bar
-        buildProfileView.progressBarView();
+       buildProfileView.progressBarView();
 
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
         String userID = currentFirebaseUser.getUid();
@@ -76,6 +76,7 @@ public class BuildProfileModel implements BuildProfilePresenter {
 //Give any name for //preference as I have given "IDvalue" and value 0.
 
                 editor.putString("name", userModel.name);
+                editor.putInt("level",0);
                 editor.apply();
                 //Hiding progress Bar after completion
                 buildProfileView.progressBarHide();

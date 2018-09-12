@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -40,6 +41,7 @@ public class TwoFragment extends Fragment {
     ProgressBar progressBar;
     public String donorId;
     TextView textViewResponse;
+    Button buttonClear;
 
 
     public TwoFragment() {
@@ -73,7 +75,7 @@ public class TwoFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_two_frag);
         progressBar = view.findViewById(R.id.progressBar);
-
+        buttonClear=view.findViewById(R.id.button_clear_responses);
         textViewResponse=view.findViewById(R.id.textViewResponse);
       //  textViewResponse.setVisibility(View.VISIBLE);
         //TODO atach adapter
@@ -84,8 +86,16 @@ public class TwoFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
         if (mAuth.getCurrentUser() != null) {
             LoadDonorUid();
-            setTextView(mDonorList.size());
+
         }
+
+        buttonClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mFirebaseInstance = FirebaseDatabase.getInstance();
+                mFirebaseInstance.getReference().child("responses").child(FirebaseAuth.getInstance().getUid()).removeValue();
+            }
+        });
 
 
 
@@ -95,7 +105,7 @@ public class TwoFragment extends Fragment {
 
     private void LoadDonorUid() {
         mFirebaseInstance = FirebaseDatabase.getInstance();
-        mDatabase = mFirebaseInstance.getReference().child("responses").child("A+").child(FirebaseAuth.getInstance().getUid());
+        mDatabase = mFirebaseInstance.getReference().child("responses").child(FirebaseAuth.getInstance().getUid());
 
         mDatabase.addValueEventListener(new ValueEventListener() {
 
@@ -131,6 +141,8 @@ public class TwoFragment extends Fragment {
 
 
                             mAdapter.notifyDataSetChanged();
+                            Log.e("Sizeee", String.valueOf( mAdapter.getItemCount()));
+                            setTextView(mAdapter.getItemCount());
 
 
 
@@ -148,9 +160,11 @@ public class TwoFragment extends Fragment {
                         }
 
                     });
-
                 }
                 progressBar.setVisibility(View.INVISIBLE);
+                Log.e("Sizeee", String.valueOf( mAdapter.getItemCount()));
+                setTextView(mAdapter.getItemCount());
+
 
             }
 
@@ -169,6 +183,7 @@ public class TwoFragment extends Fragment {
         }else{
             textViewResponse.setVisibility(View.INVISIBLE);
         }
+
     }
 
 

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -40,6 +41,7 @@ public class OneFragment extends Fragment {
     ProgressBar progressBar;
     public String donorId;
     TextView textViewRequestEmpty;
+    Button buttonClear;
 
 
 
@@ -80,6 +82,7 @@ public class OneFragment extends Fragment {
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view_one_frag);
         progressBar = view.findViewById(R.id.progressBar);
         textViewRequestEmpty=view.findViewById(R.id.textViewRequest);
+        buttonClear = view.findViewById(R.id.button_clear_request);
 
         mAdapter = new RequestAdapter(mRequestList,keysUID);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -91,12 +94,21 @@ public class OneFragment extends Fragment {
             setTextView(mRequestList.size());
         }
 
+        buttonClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mFirebaseInstance = FirebaseDatabase.getInstance();
+               mFirebaseInstance.getReference().child("requests").child(FirebaseAuth.getInstance().getUid()).removeValue();
+               mAdapter.notifyDataSetChanged();
+            }
+        });
+
     }
 
 
     private void initView() {
         mFirebaseInstance = FirebaseDatabase.getInstance();
-        mDatabase = mFirebaseInstance.getReference().child("requests").child("A+").child(mAuth.getUid());
+        mDatabase = mFirebaseInstance.getReference().child("requests").child(mAuth.getUid());
         donorId=mAuth.getUid();
         progressBar.setVisibility(View.VISIBLE);
         mDatabase.addValueEventListener(new ValueEventListener() {
@@ -139,7 +151,7 @@ public class OneFragment extends Fragment {
         }
     }
 
-    public void removeRequest(String bloodRequired,String requestKey){
+    public void removeRequest(final String bloodRequired, final String requestKey){
         Log.e("donorid",FirebaseAuth.getInstance().getUid());
         Log.e("requesteeee",requestKey);
 
@@ -149,10 +161,11 @@ public class OneFragment extends Fragment {
             @Override
             public void run() {
                 // this code will be executed after 2 seconds
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("requests").child(FirebaseAuth.getInstance().getUid()).child(requestKey);
+                databaseReference.removeValue();
             }
         }, 2000);
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("requests").child(bloodRequired).child(FirebaseAuth.getInstance().getUid()).child(requestKey);
-        databaseReference.removeValue();
+
 
 
     }

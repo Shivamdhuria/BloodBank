@@ -48,7 +48,9 @@
     <string name="response_empty">You do not have any responses.Tap the button to start a new campaign</string>
     <string name="request_empty">You do not have any requests.</string>
     <string name="select_bloodtype">Select Blood Group</string>
+    <string name="level">Level</string>
     <string name="donor_empty">No donors found.Try increasing the search radius.</string>
+    <string name="clear">Clear All</string>
 
 </resources>
 

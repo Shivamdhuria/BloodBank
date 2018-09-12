@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.elixer.bloodbank.R;
+import com.elixer.bloodbank.buildprofile.BuildProfileActivity;
 import com.elixer.bloodbank.buildprofile.UserModel;
 import com.elixer.bloodbank.intro.IntroActivity;
 import com.elixer.bloodbank.main.OneFragment.OneFragment;
@@ -155,28 +156,39 @@ public class MainActivity extends AppCompatActivity {
     void updateUI(FirebaseUser user){
 
         if(user != null){
-            //TODO GET DETAILS FROM DB
+            // GET DETAILS FROM DB untill loading
+            fetchSavedDetails();
+
             Log.e("Main Activity","User not null"+ user.getUid());
+
+            //try to get details
             DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid());
             //Get name and level
             mDatabaseRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    userModel = dataSnapshot.getValue(UserModel.class);
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    SharedPreferences.Editor editor = prefs.edit();
+
+                        userModel = dataSnapshot.getValue(UserModel.class);
+                    if (userModel != null) {
+                        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = prefs.edit();
 //Give any name for //preference as I have given "IDvalue" and value 0.
 
-                    editor.putString("name", userModel.name);
-                    editor.apply();
+                        editor.putString("name", userModel.name);
+                        editor.putInt("level",userModel.level);
+                        editor.apply();
 
-                    //Display name and level
-                    textviewLevel.setText(String.valueOf(userModel.level));
-                    textviewName.setText(userModel.name);
+                        //Display name and level
+                        displayNameAndLevel(userModel.level,userModel.name);
 
-                    Log.e("MainActivity", (String.valueOf(userModel.level)+ userModel.name));
+                        Log.e("MainActivity", (String.valueOf(userModel.level) + userModel.name));
+                    } else {
+                        Intent intentLogin = new Intent(getApplicationContext(), BuildProfileActivity.class);
+                        startActivity(intentLogin);
+                        finish();
+
+                    }
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -194,13 +206,26 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    private void fetchSavedDetails() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String name = prefs.getString("name",null);
+        int level = prefs.getInt("level",0);
+        displayNameAndLevel(level,name);
+    }
+
+    private void displayNameAndLevel(int level,String name) {
+        textviewLevel.setText(String.valueOf(level));
+        textviewName.setText(name);
+    }
+
     //
    public void sendResponse(final String requestKey) {
        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth=FirebaseAuth.getInstance();
 
 
-       mDatabase.child("responses").child("A+").child(requestKey).child(mAuth.getUid()).setValue("", new DatabaseReference.CompletionListener() {
+       mDatabase.child("responses").child(requestKey).child(mAuth.getUid()).setValue("", new DatabaseReference.CompletionListener() {
            @Override
            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                Log.e("MainActiity.Written",mAuth.getUid());

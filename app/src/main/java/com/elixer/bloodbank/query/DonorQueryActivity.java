@@ -85,7 +85,7 @@ public class DonorQueryActivity extends AppCompatActivity {
         button_request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("requests").child(bloodgroup);
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("requests");
                 long epoch = System.currentTimeMillis();
                 //Get value of name from Shared Pref
                 final SharedPreferences mSharedPreference= PreferenceManager.getDefaultSharedPreferences(getBaseContext());
