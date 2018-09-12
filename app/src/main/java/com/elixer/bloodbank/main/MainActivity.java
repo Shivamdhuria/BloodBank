@@ -225,12 +225,14 @@ public class MainActivity extends AppCompatActivity {
         mAuth=FirebaseAuth.getInstance();
 
 
+
        mDatabase.child("responses").child(requestKey).child(mAuth.getUid()).setValue("", new DatabaseReference.CompletionListener() {
            @Override
            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                Log.e("MainActiity.Written",mAuth.getUid());
            }
        });
+
 
 
 
