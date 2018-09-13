@@ -51,6 +51,7 @@
     <string name="level">Level</string>
     <string name="donor_empty">No donors found.Try increasing the search radius.</string>
     <string name="clear">Clear All</string>
+    <string name="search_donor">Search for Donors</string>
 
 </resources>
 

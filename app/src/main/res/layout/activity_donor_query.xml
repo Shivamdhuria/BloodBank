@@ -20,10 +20,14 @@
     <Button
         android:id="@+id/button_request"
         android:layout_width="match_parent"
-
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
-        android:text="@string/notify_donors" />
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/notify_donors"
+        android:theme="@style/PrimaryButton" />
 
     <ProgressBar
         android:id="@+id/progressBar1"

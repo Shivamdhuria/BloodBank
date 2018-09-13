@@ -144,7 +144,7 @@ public class DonorQueryActivity extends AppCompatActivity {
                             donorList.add(key);
                         }
                         mAdapter.notifyDataSetChanged();
-                        progressBar.setVisibility(View.INVISIBLE);
+
                         setTextView(donorList.size());
 
 
@@ -166,7 +166,7 @@ public class DonorQueryActivity extends AppCompatActivity {
 
 
 
-                progressBar.setVisibility(View.INVISIBLE);
+
 
             }
 

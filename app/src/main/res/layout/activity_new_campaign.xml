@@ -30,6 +30,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/setlocation"
         android:theme="@style/PrimaryButton"
+        android:background="@drawable/rounded_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
