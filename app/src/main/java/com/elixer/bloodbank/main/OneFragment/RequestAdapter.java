@@ -1,6 +1,7 @@
 package com.elixer.bloodbank.main.OneFragment;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,8 +12,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.elixer.bloodbank.R;
-import com.elixer.bloodbank.main.MainActivity;
 import com.elixer.bloodbank.query.RequestModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -49,9 +53,10 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b==true){
                     //Send  response firebase
-                    MainActivity mainActivity = new MainActivity();
+
                     //Sending user's UID to donor for phone number sharing
-                    mainActivity.sendResponse(requestKey);
+                    sendResponse(requestKey);
+
                     OneFragment oneFragment = new OneFragment();
                     //Remove the request as it's confirmed
 
@@ -81,5 +86,23 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
             bloodgroup =(TextView)itemView.findViewById(R.id.bloodgroup);
             aSwitch = itemView.findViewById(R.id.switch_button);
         }
+    }
+
+    public void sendResponse(final String requestKey) {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        final FirebaseAuth mAuth= FirebaseAuth.getInstance();
+
+
+        //Send response
+        mDatabase.child("responses").child(requestKey).child(mAuth.getUid()).setValue("", new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                Log.e("MainActiity.Written",mAuth.getUid());
+            }
+        });
+
+       //TODO: increase level
+
+
     }
 }
