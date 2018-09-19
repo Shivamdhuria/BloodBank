@@ -52,6 +52,8 @@
     <string name="donor_empty">No donors found.Try increasing the search radius.</string>
     <string name="clear">Clear All</string>
     <string name="search_donor">Search for Donors</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 </resources>
 

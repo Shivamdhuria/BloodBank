@@ -94,6 +94,7 @@ public class TwoFragment extends Fragment {
             public void onClick(View view) {
                 mFirebaseInstance = FirebaseDatabase.getInstance();
                 mFirebaseInstance.getReference().child("responses").child(FirebaseAuth.getInstance().getUid()).removeValue();
+                mAdapter.notifyDataSetChanged();
             }
         });
 
