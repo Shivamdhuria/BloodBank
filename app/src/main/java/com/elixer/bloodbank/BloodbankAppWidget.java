@@ -40,12 +40,21 @@ public class BloodbankAppWidget extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        // There may be multiple widgets active, so update all of them
-        for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId);
-        }
+        //REquest
+        getRequestSize();
 
-      //  FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
+
+
+       //Response
+        getResponseSize();
+
+
+    }
+
+    private void getRequestSize() {
+
+
+        //  FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
         FirebaseAuth mAuth=FirebaseAuth.getInstance();
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("requests").child(mAuth.getUid());
         mDatabase.addValueEventListener(new ValueEventListener() {
@@ -65,7 +74,7 @@ public class BloodbankAppWidget extends AppWidgetProvider {
 
 
 
-               Log.e("WIDGET..........",String.valueOf(mRequestList.size()));
+                Log.e("WIDGET..........",String.valueOf(mRequestList.size()));
 
             }
 
@@ -78,11 +87,6 @@ public class BloodbankAppWidget extends AppWidgetProvider {
 
             }
         });
-
-
-
-       //Response
-        getResponseSize();
     }
 
     private void getResponseSize() {
