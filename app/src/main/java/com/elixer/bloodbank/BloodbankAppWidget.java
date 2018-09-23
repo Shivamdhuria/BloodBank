@@ -23,73 +23,50 @@ import java.util.List;
  */
 public class BloodbankAppWidget extends AppWidgetProvider {
     static List<RequestModel> mRequestList;
-    static List<String> mDonorList;
+    static List<String> mDonorList= new ArrayList<>();
+
+    @Override
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        // There may be multiple widgets active, so update all of them
+        for (int appWidgetId : appWidgetIds) {
+            updateAppWidget(context, appWidgetManager, appWidgetId);
+        }
+    }
+
+
+    @Override
+    public void onEnabled(Context context) {
+        // Enter relevant functionality for when the first widget is created
+    }
+
+    @Override
+    public void onDisabled(Context context) {
+        // Enter relevant functionality for when the last widget is disabled
+    }
+
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+            int appWidgetId) {
 
         CharSequence widgetText = context.getString(R.string.appwidget_text);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.bloodbank_app_widget);
-        views.setTextViewText(R.id.appwidget_text, widgetText);
-        mRequestList=new ArrayList<>();
-        mDonorList=new ArrayList<>();
+
+        //Fetching from firebase to update textView
+        getResponseSize(appWidgetId,appWidgetManager);
+
+
+            views.setTextViewText(R.id.appwidget_text, String.valueOf(mDonorList.size()) + " Pending Responses");
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
-    @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        //REquest
-        getRequestSize();
-
-
-
-       //Response
-        getResponseSize();
-
-
-    }
-
-    private void getRequestSize() {
-
-
-        //  FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
-        FirebaseAuth mAuth=FirebaseAuth.getInstance();
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("requests").child(mAuth.getUid());
-        mDatabase.addValueEventListener(new ValueEventListener() {
-
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                mRequestList.clear();
-
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    RequestModel requestModel = dataSnapshot1.getValue(RequestModel.class);
-                    mRequestList.add(requestModel);
-                    //To store requests user's Key
-
-
-                }
-
-
-
-                Log.e("WIDGET..........",String.valueOf(mRequestList.size()));
-
-            }
 
 
 
 
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void getResponseSize() {
+    private static void getResponseSize(final int appWidgetId, final AppWidgetManager appWidgetManager) {
 
         //  FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
         FirebaseAuth mAuth=FirebaseAuth.getInstance();
@@ -101,17 +78,18 @@ public class BloodbankAppWidget extends AppWidgetProvider {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mDonorList.clear();
 
+
+
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                   String donorID = dataSnapshot.getKey();
+                    String donorID = dataSnapshot.getKey();
                     mDonorList.add(donorID);
                     //To store requests user's Key
 
 
                 }
-
-
-
-                Log.e("WIDGET......RESP....",String.valueOf(mDonorList.size()));
+                Log.e("WIDGET Response",String.valueOf(mDonorList.size()));
+                //Updating widget TextView(NOt working)
+                appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId,R.id.appwidget_text);
 
             }
 
@@ -126,14 +104,9 @@ public class BloodbankAppWidget extends AppWidgetProvider {
         });
     }
 
-    @Override
-    public void onEnabled(Context context) {
-        // Enter relevant functionality for when the first widget is created
-    }
 
-    @Override
-    public void onDisabled(Context context) {
-        // Enter relevant functionality for when the last widget is disabled
-    }
+
+
 }
+
 
