@@ -74,6 +74,7 @@ public class BloodbankAppWidget extends AppWidgetProvider {
         mDatabase.addValueEventListener(new ValueEventListener() {
 
 
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mDonorList.clear();
@@ -91,7 +92,9 @@ public class BloodbankAppWidget extends AppWidgetProvider {
                 //Updating widget TextView(NOt working)
                 appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId,R.id.appwidget_text);
 
+
             }
+
 
 
 

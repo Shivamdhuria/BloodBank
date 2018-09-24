@@ -21,7 +21,7 @@ public class IntroActivity extends MaterialIntroActivity{
         addSlide(new SlideFragmentBuilder()
                         .backgroundColor(R.color.colorBackground)
                         .buttonsColor(R.color.colorAccent)
-                        .image(agency.tango.materialintroscreen.R.drawable.ic_next)
+                        .image(R.drawable.reddrop)
                         .title(getString(R.string.intro1title))
                         .description(getString(R.string.intro1description))
                         .build());
@@ -31,7 +31,7 @@ public class IntroActivity extends MaterialIntroActivity{
                         .backgroundColor(R.color.colorBackground)
                         .buttonsColor(R.color.colorAccent)
                         .neededPermissions(new String[]{Manifest.permission.INTERNET, Manifest.permission.ACCESS_FINE_LOCATION})
-
+                        .image(R.drawable.heartp)
                         .title(getString(R.string.intro2title))
                         .description(getString(R.string.intro2description))
                         .build());
@@ -40,6 +40,7 @@ public class IntroActivity extends MaterialIntroActivity{
         addSlide(new SlideFragmentBuilder()
                 .backgroundColor(R.color.colorBackground)
                 .buttonsColor(R.color.colorAccent)
+                .image(R.drawable.intro3)
                 .title(getString(R.string.intro3title))
                 .description(getString(R.string.intro3description))
                 .build());

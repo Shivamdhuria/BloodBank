@@ -7,10 +7,10 @@
     <string name="intro1description">An easy way for blood donors to connect.</string>
 
     <string name="intro2title">Find Blood Easily</string>
-    <string name="intro2description">An easy way for blood donors to connect.</string>
+    <string name="intro2description">Bloodbank helps you to share your contact number with donors ,should you accept their request.</string>
 
     <string name="intro3title">Do your bit</string>
-    <string name="intro3description">An easy way for blood donors to connect.</string>
+    <string name="intro3description">Bloodbank does not share your personal details ,unless you want to share them.</string>
 
     <string name="loginhint">Enter 10 digit number here</string>
     <string name="otphint">Enter OTP here</string>
