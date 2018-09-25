@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.aigestudio.wheelpicker.WheelPicker;
+import com.elixer.bloodbank.NetworkAvailable;
 import com.elixer.bloodbank.R;
 import com.elixer.bloodbank.main.MainActivity;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -44,6 +45,12 @@ public class BuildProfileActivity extends AppCompatActivity implements BuildProf
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_build_profile);
+        //Network Check
+        if(!NetworkAvailable.isNetworkAvailable(BuildProfileActivity.this)){
+            Toast.makeText(this,"Check your internet connection",Toast.LENGTH_LONG).show();
+        }
+
+
         button_save=findViewById(R.id.button_save);
         button_setLocation=findViewById(R.id.button_location);
 

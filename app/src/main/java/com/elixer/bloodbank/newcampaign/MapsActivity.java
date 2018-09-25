@@ -7,9 +7,12 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
+import com.elixer.bloodbank.NetworkAvailable;
 import com.elixer.bloodbank.R;
 import com.elixer.bloodbank.query.DonorQueryActivity;
+import com.elixer.bloodbank.signin.SignInActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -51,6 +54,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         place = (String) bundle.get("place");
         latitude=bundle.getDouble("latitude");
         longitude=bundle.getDouble("longitude");
+
+        //Network Check
+        if(!NetworkAvailable.isNetworkAvailable(MapsActivity.this)){
+            Toast.makeText(this,"Check your internet connection",Toast.LENGTH_LONG).show();
+        }
 
 
 

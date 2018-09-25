@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.elixer.bloodbank.NetworkAvailable;
 import com.elixer.bloodbank.R;
 import com.elixer.bloodbank.buildprofile.UserModel;
 import com.elixer.bloodbank.main.MainActivity;
@@ -51,6 +52,12 @@ public class DonorQueryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donor_query);
+
+
+        //Network Check
+        if(!NetworkAvailable.isNetworkAvailable(DonorQueryActivity.this)){
+            Toast.makeText(this,"Check your internet connection",Toast.LENGTH_LONG).show();
+        }
         //Initialized Progress Bar
         progressBar = findViewById(R.id.progressBar1);
         textViewEmpty= findViewById(R.id.textViewEmpty);
@@ -80,38 +87,46 @@ public class DonorQueryActivity extends AppCompatActivity {
 
         SearchForDonors(bloodgroup,latitude,longitude,radius);
 
-        setTextView(donorList.size());
+
 
         button_request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("requests");
-                long epoch = System.currentTimeMillis();
-                //Get value of name from Shared Pref
-                final SharedPreferences mSharedPreference= PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-                String name=(mSharedPreference.getString("name", ""));
-                RequestModel requestModel = new RequestModel(name,bloodgroup,epoch,place,false);
-
                 //TODO corner case if donor list empty
+                if (donorList.size() == 0) {
+
+                    Toast.makeText(getApplicationContext(),"No Donors Available,Try increasing search radius.",Toast.LENGTH_LONG).show();
+
+                } else {
 
 
-                //TODO find when sent to all?
-                int totalDonors = donorList.size();
-                for(int i = 0 ;i<totalDonors;i++){
-                 mDatabase.child(donorList.get(i)).child(mAuth.getUid()).setValue(requestModel);
+                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("requests");
+                    long epoch = System.currentTimeMillis();
+                    //Get value of name from Shared Pref
+                    final SharedPreferences mSharedPreference = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                    String name = (mSharedPreference.getString("name", ""));
+                    RequestModel requestModel = new RequestModel(name, bloodgroup, epoch, place, false);
+
+
+                    //TODO find when sent to all?
+                    int totalDonors = donorList.size();
+                    for (int i = 0; i < totalDonors; i++) {
+                        mDatabase.child(donorList.get(i)).child(mAuth.getUid()).setValue(requestModel);
+                    }
+                    Intent intentMain = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intentMain);
+                    finish();
+                    Toast.makeText(getApplicationContext(), "Donor Request Sent", Toast.LENGTH_LONG).show();
                 }
-                Intent intentMain = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intentMain);
-                finish();
-                Toast.makeText(getApplicationContext(),"Donor Request Sent",Toast.LENGTH_LONG).show();
             }
-
         });
 
     }
 
 
     void SearchForDonors(String bloodgroup,Double latitude,Double longitude,int radius){
+        //Make bar visible
+        progressBar.setVisibility(View.VISIBLE);
 
 
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
@@ -143,6 +158,7 @@ public class DonorQueryActivity extends AppCompatActivity {
 
                             donorList.add(key);
                         }
+                        progressBar.setVisibility(View.INVISIBLE);
                         mAdapter.notifyDataSetChanged();
 
                         setTextView(donorList.size());

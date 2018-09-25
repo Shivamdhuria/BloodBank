@@ -30,7 +30,8 @@ public class IntroActivity extends MaterialIntroActivity{
         addSlide(new SlideFragmentBuilder()
                         .backgroundColor(R.color.colorBackground)
                         .buttonsColor(R.color.colorAccent)
-                        .neededPermissions(new String[]{Manifest.permission.INTERNET, Manifest.permission.ACCESS_FINE_LOCATION})
+                        .neededPermissions(new String[]{Manifest.permission.INTERNET, Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_NETWORK_STATE})
+
                         .image(R.drawable.heartp)
                         .title(getString(R.string.intro2title))
                         .description(getString(R.string.intro2description))
