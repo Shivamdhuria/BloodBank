@@ -9,11 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp" />
+
     <TextView
         android:id="@+id/textViewResponse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:text="@string/response_empty"
         android:textAlignment="center"
         android:visibility="invisible" />

@@ -1,20 +1,50 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
     android:padding="@dimen/widget_margin">
 
     <TextView
-        android:id="@+id/appwidget_text"
-        android:layout_width="wrap_content"
+        android:id="@+id/appwidget_text_request"
+        android:layout_width="252dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_margin="8dp"
+        android:layout_alignTop="@+id/imageButton"
+        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@+id/imageButton"
         android:contentDescription="@string/appwidget_text"
+        android:fontFamily="serif"
         android:text="@string/appwidget_text"
+        android:textAlignment="viewStart"
         android:textColor="#ffffff"
-        android:textSize="24sp"
-        android:textStyle="bold|italic" />
+        android:textSize="18sp"
+        android:textStyle="italic" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/bloood5"
+        android:elevation="10dp" />
+
+    <TextView
+        android:id="@+id/appwidget_text_response"
+        android:layout_width="253dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageButton"
+        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@+id/imageButton"
+        android:contentDescription="@string/appwidget_text"
+        android:fontFamily="serif"
+        android:text="@string/appwidget_text"
+        android:textAlignment="viewStart"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:textStyle="italic" />
 
 </RelativeLayout>

@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.elixer.bloodbank.R;
 import com.elixer.bloodbank.query.RequestModel;
@@ -154,7 +155,7 @@ public class OneFragment extends Fragment {
     public void removeRequest(final String bloodRequired, final String requestKey){
         Log.e("donorid",FirebaseAuth.getInstance().getUid());
         Log.e("requesteeee",requestKey);
-
+        Toast.makeText(getContext(),"Contact number shared!",Toast.LENGTH_LONG).show();
 
         //delay
         new Timer().schedule(new TimerTask() {

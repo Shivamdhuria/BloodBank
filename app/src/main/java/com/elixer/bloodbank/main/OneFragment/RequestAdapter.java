@@ -98,6 +98,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                 Log.e("MainActiity.Written",mAuth.getUid());
+
             }
         });
 

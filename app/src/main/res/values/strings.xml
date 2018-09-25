@@ -45,7 +45,7 @@
     <string name="name_default">John Doe</string>
     <string name="level_default">21</string>
 
-    <string name="response_empty">You do not have any responses.Tap the button to start a new campaign</string>
+    <string name="response_empty">You do not have any responses.Tap FAB to start a new campaign</string>
     <string name="request_empty">You do not have any requests.</string>
     <string name="select_bloodtype">Select Blood Group</string>
     <string name="level">Level</string>
