@@ -56,7 +56,7 @@ public class DonorQueryActivity extends AppCompatActivity {
 
         //Network Check
         if(!NetworkAvailable.isNetworkAvailable(DonorQueryActivity.this)){
-            Toast.makeText(this,"Check your internet connection",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,getString(R.string.connection_check),Toast.LENGTH_LONG).show();
         }
         //Initialized Progress Bar
         progressBar = findViewById(R.id.progressBar1);
@@ -95,7 +95,7 @@ public class DonorQueryActivity extends AppCompatActivity {
                 //TODO corner case if donor list empty
                 if (donorList.size() == 0) {
 
-                    Toast.makeText(getApplicationContext(),"No Donors Available,Try increasing search radius.",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),getString(R.string.increase_radius),Toast.LENGTH_LONG).show();
 
                 } else {
 
@@ -116,7 +116,7 @@ public class DonorQueryActivity extends AppCompatActivity {
                     Intent intentMain = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intentMain);
                     finish();
-                    Toast.makeText(getApplicationContext(), "Donor Request Sent", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.donor_request_sent), Toast.LENGTH_LONG).show();
                 }
             }
         });

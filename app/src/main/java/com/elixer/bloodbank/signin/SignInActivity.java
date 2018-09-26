@@ -33,7 +33,7 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
         //Network Check
         if(!NetworkAvailable.isNetworkAvailable(SignInActivity.this)){
-            Toast.makeText(this,"Check your internet connection",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,getString(R.string.connection_check),Toast.LENGTH_LONG).show();
         }
 
 

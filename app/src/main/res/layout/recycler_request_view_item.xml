@@ -20,7 +20,7 @@
         android:layout_alignBottom="@+id/bloodgroup"
         android:layout_alignStart="@+id/name"
         android:padding="3dp"
-        android:text="Dharamshala,India"
+        android:text="@string/location_hint"
         android:textSize="12sp" />
 
     <TextView
@@ -61,6 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toStartOf="@+id/switch_button"
-        app:srcCompat="@android:drawable/ic_menu_call" />
+        app:srcCompat="@android:drawable/ic_menu_call"
+        android:contentDescription="@string/call_button_desc" />
 
 </RelativeLayout>

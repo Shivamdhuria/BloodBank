@@ -36,6 +36,7 @@
     <string name="bloodgroup_hint">C+</string>
     <string name="name_hint">John Doe</string>
     <string name="level_hint">21</string>
+    <string name="location_hint">Dharamshala,India</string>
     <string name="address_hint">Dharamshala,India</string>
     <string name="title_activity_maps">Map</string>
 
@@ -54,6 +55,20 @@
     <string name="search_donor">Search for Donors</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+
+    <string name="call_button_desc">Press to call</string>
+    <string name="new_campaight_button_desc">Start New Campaign</string>
+
+
+
+
+    <string name="unsuccessful">"Data Push Unsuccessful</string>
+    <string name="connection_check">Check your Internet Connection!</string>
+    <string name="contact_shared">Contact number shared!</string>
+    <string name="donor_request_sent">Donor Request Sent</string>
+    <string name="increase_radius"> No Donors Available,Try increasing search radius.</string>
+
+
 
 </resources>
 

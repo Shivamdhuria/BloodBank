@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.elixer.bloodbank.NetworkAvailable;
 import com.elixer.bloodbank.R;
 import com.elixer.bloodbank.query.DonorQueryActivity;
-import com.elixer.bloodbank.signin.SignInActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -57,7 +56,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Network Check
         if(!NetworkAvailable.isNetworkAvailable(MapsActivity.this)){
-            Toast.makeText(this,"Check your internet connection",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,getString(R.string.connection_check),Toast.LENGTH_LONG).show();
         }
 
 

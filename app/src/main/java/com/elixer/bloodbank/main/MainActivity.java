@@ -16,9 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.elixer.bloodbank.NetworkAvailable;
 import com.elixer.bloodbank.R;
 import com.elixer.bloodbank.buildprofile.BuildProfileActivity;
 import com.elixer.bloodbank.buildprofile.UserModel;
@@ -55,11 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-
-        //Network Check
-        if(!NetworkAvailable.isNetworkAvailable(MainActivity.this)){
-            Toast.makeText(this,"Check your internet connection",Toast.LENGTH_LONG).show();
-        }
 
 
 

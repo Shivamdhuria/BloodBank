@@ -47,7 +47,7 @@ public class BuildProfileActivity extends AppCompatActivity implements BuildProf
         setContentView(R.layout.activity_build_profile);
         //Network Check
         if(!NetworkAvailable.isNetworkAvailable(BuildProfileActivity.this)){
-            Toast.makeText(this,"Check your internet connection",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,getString(R.string.contact_shared),Toast.LENGTH_LONG).show();
         }
 
 
@@ -132,7 +132,7 @@ public class BuildProfileActivity extends AppCompatActivity implements BuildProf
 
     @Override
     public void databaseNotWritten() {
-        Toast.makeText(this,"Data Push Unsuccessfull",Toast.LENGTH_LONG).show();
+        Toast.makeText(this,getString(R.string.unsuccessful),Toast.LENGTH_LONG).show();
 
     }
     @Override

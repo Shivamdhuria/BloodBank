@@ -155,7 +155,7 @@ public class OneFragment extends Fragment {
     public void removeRequest(final String bloodRequired, final String requestKey){
         Log.e("donorid",FirebaseAuth.getInstance().getUid());
         Log.e("requesteeee",requestKey);
-        Toast.makeText(getContext(),"Contact number shared!",Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(),getString(R.string.contact_shared),Toast.LENGTH_LONG).show();
 
         //delay
         new Timer().schedule(new TimerTask() {

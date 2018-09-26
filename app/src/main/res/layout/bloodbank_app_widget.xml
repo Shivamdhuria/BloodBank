@@ -11,7 +11,7 @@
         android:layout_width="252dp"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/imageButton"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/imageButton"
         android:contentDescription="@string/appwidget_text"
         android:fontFamily="serif"
@@ -27,17 +27,18 @@
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         android:background="@drawable/bloood5"
-        android:elevation="10dp" />
+        android:elevation="10dp"
+        android:contentDescription="@string/new_campaight_button_desc" />
 
     <TextView
         android:id="@+id/appwidget_text_response"
         android:layout_width="253dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageButton"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/imageButton"
         android:contentDescription="@string/appwidget_text"
         android:fontFamily="serif"
