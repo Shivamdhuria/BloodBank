@@ -38,14 +38,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView name,place,level,bloodgroup;
+        public TextView name, place, level, bloodgroup;
 
         ViewHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.name);
             place = (TextView) itemView.findViewById(R.id.place);
             level = (TextView) itemView.findViewById(R.id.level);
-            bloodgroup =(TextView)itemView.findViewById(R.id.bloodgroup);
+            bloodgroup = (TextView) itemView.findViewById(R.id.bloodgroup);
         }
     }
 }

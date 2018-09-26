@@ -56,18 +56,13 @@ public class TwoFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
 
 
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.activity_two_fragment, container, false);
-
-
         return v;
     }
 
@@ -75,11 +70,11 @@ public class TwoFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_two_frag);
         progressBar = view.findViewById(R.id.progressBar);
-        buttonClear=view.findViewById(R.id.button_clear_responses);
-        textViewResponse=view.findViewById(R.id.textViewResponse);
-      //  textViewResponse.setVisibility(View.VISIBLE);
+        buttonClear = view.findViewById(R.id.button_clear_responses);
+        textViewResponse = view.findViewById(R.id.textViewResponse);
+        //  textViewResponse.setVisibility(View.VISIBLE);
         //TODO atach adapter
-          mAdapter = new ResponseAdapter(mDonorList);
+        mAdapter = new ResponseAdapter(mDonorList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -88,7 +83,6 @@ public class TwoFragment extends Fragment {
             LoadDonorUid();
 
         }
-
         buttonClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,15 +93,12 @@ public class TwoFragment extends Fragment {
         });
 
 
-
     }
-
 
 
     private void LoadDonorUid() {
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mDatabase = mFirebaseInstance.getReference().child("responses").child(FirebaseAuth.getInstance().getUid());
-
         mDatabase.addValueEventListener(new ValueEventListener() {
 
 
@@ -115,11 +106,9 @@ public class TwoFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mDonorList.clear();
                 progressBar.setVisibility(View.VISIBLE);
-
-
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     String donorUid = postSnapshot.getKey();
-                    Log.e("DONOR............",donorUid);
+                    Log.e("DONOR............", donorUid);
                     //To store requests user's Key
                     //Another query to load UserModel
                     DatabaseReference mUserDatabase = FirebaseDatabase.getInstance().getReference();
@@ -136,34 +125,25 @@ public class TwoFragment extends Fragment {
                             String name = userModel.name;
                             // This method is called once with the initial value and again
                             // whenever data at this location is updated.
-
                             mDonorList.add(userModel);
                             //Adding donorId to the list for requests database
-
-
                             mAdapter.notifyDataSetChanged();
-                            Log.e("Sizeee", String.valueOf( mAdapter.getItemCount()));
+                            Log.e("Sizeee", String.valueOf(mAdapter.getItemCount()));
                             setTextView(mAdapter.getItemCount());
-
-
-
-                            Log.e("DONOR",name);
-
+                            Log.e("DONOR", name);
 
 
                         }
 
 
-
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
-
                         }
 
                     });
                 }
                 progressBar.setVisibility(View.INVISIBLE);
-                Log.e("Sizeee", String.valueOf( mAdapter.getItemCount()));
+                Log.e("Sizeee", String.valueOf(mAdapter.getItemCount()));
                 setTextView(mAdapter.getItemCount());
 
 
@@ -171,7 +151,6 @@ public class TwoFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
 
@@ -179,16 +158,16 @@ public class TwoFragment extends Fragment {
     }
 
     private void setTextView(int size) {
-        if(size==0){
+        if (size == 0) {
             textViewResponse.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             textViewResponse.setVisibility(View.INVISIBLE);
         }
 
     }
 
 
-    public void startDialerActivity(String phoneNumber){
+    public void startDialerActivity(String phoneNumber) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse(phoneNumber));
         startActivity(intent);

@@ -45,36 +45,24 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     FirebaseAuth mAuth;
     UserModel userModel;
-    TextView textviewLevel,textviewName;
+    TextView textviewLevel, textviewName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
-
-
-
-
         toolbar = (Toolbar) findViewById(R.id.htab_toolbar);
         textviewLevel = findViewById(R.id.textView_level);
-        textviewName=findViewById(R.id.textView_name);
+        textviewName = findViewById(R.id.textView_name);
         setSupportActionBar(toolbar);
-
-
-
         viewPager = (ViewPager) findViewById(R.id.htab_viewpager);
         setupViewPager(viewPager);
-
         tabLayout = (TabLayout) findViewById(R.id.htab_tabs);
         tabLayout.setupWithViewPager(viewPager);
         mAuth = FirebaseAuth.getInstance();
-
         // Check if user is signed in (non-null) and update UI accordingly.
         checkIfFirstTime();
         //Check if
-
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,13 +76,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new OneFragment(), "Requests");
         adapter.addFragment(new TwoFragment(), "Responses");
-
         viewPager.setAdapter(adapter);
     }
 
@@ -127,63 +112,47 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
     }
 
     void checkIfFirstTime() {
         final String PREFS_NAME = "MyPrefsFile";
-
-
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-
         if (settings.getBoolean("my_first_time", true)) {
             //the app is being launched for first time, do something
             Log.d("Comments", "First time");
-
             // first time task
-
-
             // record the fact that the app has been started at least once
             settings.edit().putBoolean("my_first_time", false).commit();
-
             Intent intentIntro = new Intent(getApplicationContext(), IntroActivity.class);
             startActivity(intentIntro);
         } else {
             // Check if user is signed in (non-null) and update UI accordingly.
-
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
             updateUI(currentUser);
         }
     }
 
-    void updateUI(FirebaseUser user){
-
-        if(user != null){
+    void updateUI(FirebaseUser user) {
+        if (user != null) {
             // GET DETAILS FROM DB untill loading
             fetchSavedDetails();
-
-            Log.e("Main Activity","User not null"+ user.getUid());
-
+            Log.e("Main Activity", "User not null" + user.getUid());
             //try to get details
             DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid());
             //Get name and level
             mDatabaseRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        userModel = dataSnapshot.getValue(UserModel.class);
+                    userModel = dataSnapshot.getValue(UserModel.class);
                     if (userModel != null) {
                         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = prefs.edit();
 //Give any name for //preference as I have given "IDvalue" and value 0.
-
                         editor.putString("name", userModel.name);
-                        editor.putInt("level",userModel.level);
+                        editor.putInt("level", userModel.level);
                         editor.apply();
-
                         //Display name and level
-                        displayNameAndLevel(userModel.level,userModel.name);
-
+                        displayNameAndLevel(userModel.level, userModel.name);
                         Log.e("MainActivity", (String.valueOf(userModel.level) + userModel.name));
                     } else {
                         Intent intentLogin = new Intent(getApplicationContext(), BuildProfileActivity.class);
@@ -192,18 +161,15 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
                 }
 
-             });
-        }
-
-        else {
-
+            });
+        } else {
             //Send Back to Login
-            Log.e("Main Activity","User  null");
+            Log.e("Main Activity", "User  null");
             Intent intentLogin = new Intent(this, SignInActivity.class);
             startActivity(intentLogin);
         }
@@ -212,16 +178,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void fetchSavedDetails() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String name = prefs.getString("name",null);
-        int level = prefs.getInt("level",0);
-        displayNameAndLevel(level,name);
+        String name = prefs.getString("name", null);
+        int level = prefs.getInt("level", 0);
+        displayNameAndLevel(level, name);
     }
 
-    private void displayNameAndLevel(int level,String name) {
+    private void displayNameAndLevel(int level, String name) {
         textviewLevel.setText(String.valueOf(level));
         textviewName.setText(name);
     }
-
     //
 
 }

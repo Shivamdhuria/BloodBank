@@ -29,7 +29,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Double latitude;
     Double longitude;
     SeekBar seekBar;
-    int radius= 10;
+    int radius = 10;
     LatLng currentLocation;
     Circle circle;
     Button button_search;
@@ -49,48 +49,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
         Intent intent = getIntent();
         bundle = intent.getExtras();
-
         place = (String) bundle.get("place");
-        latitude=bundle.getDouble("latitude");
-        longitude=bundle.getDouble("longitude");
-
+        latitude = bundle.getDouble("latitude");
+        longitude = bundle.getDouble("longitude");
         //Network Check
-        if(!NetworkAvailable.isNetworkAvailable(MapsActivity.this)){
-            Toast.makeText(this,getString(R.string.connection_check),Toast.LENGTH_LONG).show();
+        if (!NetworkAvailable.isNetworkAvailable(MapsActivity.this)) {
+            Toast.makeText(this, getString(R.string.connection_check), Toast.LENGTH_LONG).show();
         }
-
-
-
         //On seek bar change
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 radius = i;
-                circle.setRadius(radius*1000);
+                circle.setRadius(radius * 1000);
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
             }
         });
-
         button_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intentDonorQuery = new Intent(getApplicationContext(), DonorQueryActivity.class);
-                bundle.putInt("radius",radius);
+                bundle.putInt("radius", radius);
                 intentDonorQuery.putExtras(bundle);
                 startActivity(intentDonorQuery);
             }
         });
     }
-
 
 
     @Override
@@ -99,11 +90,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Add a marker in Sydney and move the camera
         currentLocation = new LatLng(latitude, longitude);
         mMap.addMarker(new MarkerOptions().position(currentLocation).title(place));
-       // mMap.animateCamera(CameraUpdateFactory.newLatLng(currentLocation));
+        // mMap.animateCamera(CameraUpdateFactory.newLatLng(currentLocation));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 10));
-        circle =  mMap.addCircle(new CircleOptions()
+        circle = mMap.addCircle(new CircleOptions()
                 .center(currentLocation)
-                .radius(radius*1000)
+                .radius(radius * 1000)
                 .strokeWidth(0)
                 .strokeColor(Color.parseColor("#2271cce7"))
                 .fillColor(Color.parseColor("#2271cce7")));
@@ -111,11 +102,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    void SetRadius(int r){
-
+    void SetRadius(int r) {
         mMap.addCircle(new CircleOptions()
                 .center(currentLocation)
-                .radius(r*1000)
+                .radius(r * 1000)
                 .strokeWidth(1f)
                 .strokeColor(Color.parseColor("#2271cce7"))
                 .fillColor(0x550000FF));

@@ -21,7 +21,6 @@ public class ResponseAdapter extends RecyclerView.Adapter<com.elixer.bloodbank.m
     private List<UserModel> donorList;
 
 
-
     ResponseAdapter(List<UserModel> donorList) {
         this.donorList = donorList;
 
@@ -29,32 +28,28 @@ public class ResponseAdapter extends RecyclerView.Adapter<com.elixer.bloodbank.m
     }
 
 
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-         return  new com.elixer.bloodbank.main.TwoFragment.ResponseAdapter.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_response_view_item, parent, false));
+        return new com.elixer.bloodbank.main.TwoFragment.ResponseAdapter.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_response_view_item, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
         final UserModel userModel = donorList.get(position);
-
         holder.name.setText(userModel.name);
         holder.place.setText(userModel.city);
-
         holder.bloodgroup.setText(userModel.bloodGroup);
         holder.level.setText(String.valueOf(userModel.level));
         holder.callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    //Open Dialer Activity
+                //Open Dialer Activity
                 TwoFragment twoFragment = new TwoFragment();
                 //twoFragment.startDialerActivity(userModel.phoneNumber);
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:"+ userModel.phoneNumber));
-                Log.e("Phone mnbr",userModel.phoneNumber);
+                intent.setData(Uri.parse("tel:" + userModel.phoneNumber));
+                Log.e("Phone mnbr", userModel.phoneNumber);
                 view.getContext().startActivity(intent);
             }
         });
@@ -68,16 +63,16 @@ public class ResponseAdapter extends RecyclerView.Adapter<com.elixer.bloodbank.m
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView name,place,level,bloodgroup;
+        public TextView name, place, level, bloodgroup;
         public ImageButton callButton;
 
         public ViewHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.name);
             place = (TextView) itemView.findViewById(R.id.place);
-           level = (TextView) itemView.findViewById(R.id.level);
-            bloodgroup =(TextView)itemView.findViewById(R.id.bloodgroup);
-            callButton=itemView.findViewById(R.id.callButton);
+            level = (TextView) itemView.findViewById(R.id.level);
+            bloodgroup = (TextView) itemView.findViewById(R.id.bloodgroup);
+            callButton = itemView.findViewById(R.id.callButton);
 
         }
     }

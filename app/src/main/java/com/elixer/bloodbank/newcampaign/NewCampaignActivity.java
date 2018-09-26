@@ -21,26 +21,24 @@ import java.util.List;
 public class NewCampaignActivity extends AppCompatActivity {
     Button button;
     EditText editText;
-    Double latitude,longitude;
+    Double latitude, longitude;
     String city;
     String TAG = "NewCampaign";
     List<String> bloodgroups;
     private WheelPicker wheel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_campaign);
         button = findViewById(R.id.button);
         bloodgroups = Arrays.asList(getResources().getStringArray(R.array.blood_groups));
-
         wheel = (WheelPicker) findViewById(R.id.main_wheel);
         wheel.setData(bloodgroups);
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
-
                 try {
                     Intent intent =
                             new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
@@ -48,12 +46,12 @@ public class NewCampaignActivity extends AppCompatActivity {
                     startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
                 } catch (GooglePlayServicesRepairableException e) {
                     // TODO: Handle the error.
-                    Log.e("hh",e.toString());
+                    Log.e("hh", e.toString());
                 } catch (GooglePlayServicesNotAvailableException e) {
                     // TODO: Handle the error.
-                    Log.e("hh",e.toString());
+                    Log.e("hh", e.toString());
                 }
-               // startActivity(intentMapsActivity);
+                // startActivity(intentMapsActivity);
             }
         });
     }
@@ -64,24 +62,20 @@ public class NewCampaignActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(this, data);
                 Log.i(TAG, "Place: " + place.getName());
-
                 city = place.getName().toString();
                 latitude = (place.getLatLng().latitude);
                 longitude = (place.getLatLng().longitude);
-
-                Intent intentMapsActivity = new Intent(this,MapsActivity.class);
+                Intent intentMapsActivity = new Intent(this, MapsActivity.class);
                 Bundle bundle = new Bundle();
-
                 //TODO: Error for empty selection of bloodgroup
                 String bloodtype = bloodgroups.get(wheel.getCurrentItemPosition());
-                bundle.putString("bloodgroup",bloodtype);
-                bundle.putString("place",city);
-                bundle.putDouble("latitude",latitude);
-                bundle.putDouble("longitude",longitude);
+                bundle.putString("bloodgroup", bloodtype);
+                bundle.putString("place", city);
+                bundle.putDouble("latitude", latitude);
+                bundle.putDouble("longitude", longitude);
                 intentMapsActivity.putExtras(bundle);
                 startActivity(intentMapsActivity);
-
-                Log.e(TAG, "Place: " + city + " lat " + latitude + "long" + longitude + "  "+bloodtype);
+                Log.e(TAG, "Place: " + city + " lat " + latitude + "long" + longitude + "  " + bloodtype);
 
             }
         }

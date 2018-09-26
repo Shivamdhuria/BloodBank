@@ -52,62 +52,44 @@ public class DonorQueryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donor_query);
-
-
         //Network Check
-        if(!NetworkAvailable.isNetworkAvailable(DonorQueryActivity.this)){
-            Toast.makeText(this,getString(R.string.connection_check),Toast.LENGTH_LONG).show();
+        if (!NetworkAvailable.isNetworkAvailable(DonorQueryActivity.this)) {
+            Toast.makeText(this, getString(R.string.connection_check), Toast.LENGTH_LONG).show();
         }
         //Initialized Progress Bar
         progressBar = findViewById(R.id.progressBar1);
-        textViewEmpty= findViewById(R.id.textViewEmpty);
-
-
-
+        textViewEmpty = findViewById(R.id.textViewEmpty);
         mAuth = FirebaseAuth.getInstance();
-
-        button_request=findViewById(R.id.button_request);
+        button_request = findViewById(R.id.button_request);
         Intent intent = getIntent();
         bundle = intent.getExtras();
-        int radius=bundle.getInt("radius");
+        int radius = bundle.getInt("radius");
         bloodgroup = bundle.getString("bloodgroup");
         place = (String) bundle.get("place");
-        Double latitude=bundle.getDouble("latitude");
-        Double longitude=bundle.getDouble("longitude");
-
-        Log.e("DONOR query ",radius+bloodgroup+place+latitude.toString()+longitude);
+        Double latitude = bundle.getDouble("latitude");
+        Double longitude = bundle.getDouble("longitude");
+        Log.e("DONOR query ", radius + bloodgroup + place + latitude.toString() + longitude);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-
         mAdapter = new RecyclerViewAdapter(userList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
-
-
-        SearchForDonors(bloodgroup,latitude,longitude,radius);
-
-
-
+        SearchForDonors(bloodgroup, latitude, longitude, radius);
         button_request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO corner case if donor list empty
                 if (donorList.size() == 0) {
-
-                    Toast.makeText(getApplicationContext(),getString(R.string.increase_radius),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.increase_radius), Toast.LENGTH_LONG).show();
 
                 } else {
-
-
                     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("requests");
                     long epoch = System.currentTimeMillis();
                     //Get value of name from Shared Pref
                     final SharedPreferences mSharedPreference = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                     String name = (mSharedPreference.getString("name", ""));
                     RequestModel requestModel = new RequestModel(name, bloodgroup, epoch, place, false);
-
-
                     //TODO find when sent to all?
                     int totalDonors = donorList.size();
                     for (int i = 0; i < totalDonors; i++) {
@@ -124,15 +106,12 @@ public class DonorQueryActivity extends AppCompatActivity {
     }
 
 
-    void SearchForDonors(String bloodgroup,Double latitude,Double longitude,int radius){
+    void SearchForDonors(String bloodgroup, Double latitude, Double longitude, int radius) {
         //Make bar visible
         progressBar.setVisibility(View.VISIBLE);
-
-
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(bloodgroup);
         GeoFire geoFire = new GeoFire(ref);
-
         GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(latitude, longitude), radius);
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
@@ -144,7 +123,7 @@ public class DonorQueryActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         //The dataSnapshot should hold the actual data about the location
-                       // dataSnapshot.getChild("name").getValue(String.class);
+                        // dataSnapshot.getChild("name").getValue(String.class);
                         //should return the name of the location and dataSnapshot.getChild("description").getValue(String.class);
                         // should return the description of the locations
                         UserModel userModel = dataSnapshot.getValue(UserModel.class);
@@ -152,36 +131,26 @@ public class DonorQueryActivity extends AppCompatActivity {
                         // This method is called once with the initial value and again
                         // whenever data at this location is updated.
                         //TODO Remove user's AUTH from list
-                        if(!key.equals(FirebaseAuth.getInstance().getUid())) {
+                        if (!key.equals(FirebaseAuth.getInstance().getUid())) {
                             userList.add(userModel);
                             //Adding donorId to the list for requests database
-
                             donorList.add(key);
                         }
                         progressBar.setVisibility(View.INVISIBLE);
                         mAdapter.notifyDataSetChanged();
-
                         setTextView(donorList.size());
-
-
-                        Log.e("USERList",userList.toString()
+                        Log.e("USERList", userList.toString()
                         );
-                        Log.e("DONOR",name);
+                        Log.e("DONOR", name);
 
                     }
-
-
 
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
                     }
 
                 });
-
-
-
 
 
             }
@@ -193,7 +162,8 @@ public class DonorQueryActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onKeyMoved(String key, GeoLocation location) {}
+            public void onKeyMoved(String key, GeoLocation location) {
+            }
 
             @Override
             public void onGeoQueryReady() {
@@ -203,19 +173,18 @@ public class DonorQueryActivity extends AppCompatActivity {
 
             @Override
             public void onGeoQueryError(DatabaseError error) {
-
             }
         });
         progressBar.setVisibility(View.INVISIBLE);
     }
+
     private void setTextView(int size) {
-        if(size==0){
+        if (size == 0) {
             textViewEmpty.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             textViewEmpty.setVisibility(View.INVISIBLE);
         }
     }
-
 
 
 }

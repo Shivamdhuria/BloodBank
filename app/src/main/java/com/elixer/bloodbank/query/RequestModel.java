@@ -9,18 +9,16 @@ public class RequestModel {
     public String placeOfCampaign;
     Boolean status;
 
-    public RequestModel()
-    {
+    public RequestModel() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
-    public RequestModel(String name, String bloodRequired, long epochTime, String placeOfCampaign,Boolean status){
 
-
-        this.name=name;
-        this.bloodRequired=bloodRequired;
-        this.epochTime=epochTime;
-        this.placeOfCampaign=placeOfCampaign;
-        this.status=status;
+    public RequestModel(String name, String bloodRequired, long epochTime, String placeOfCampaign, Boolean status) {
+        this.name = name;
+        this.bloodRequired = bloodRequired;
+        this.epochTime = epochTime;
+        this.placeOfCampaign = placeOfCampaign;
+        this.status = status;
 
 
     }
@@ -41,10 +39,6 @@ public class RequestModel {
     public void setName(String name) {
         this.name = name;
     }
-
-
-
-
 
 
     public String getBloodRequired() {
