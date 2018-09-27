@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.elixer.bloodbank.NetworkAvailable;
+import com.elixer.bloodbank.NetworkUtilTask;
 import com.elixer.bloodbank.R;
 import com.elixer.bloodbank.buildprofile.UserModel;
 import com.elixer.bloodbank.main.MainActivity;
@@ -52,10 +52,10 @@ public class DonorQueryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donor_query);
+
         //Network Check
-        if (!NetworkAvailable.isNetworkAvailable(DonorQueryActivity.this)) {
-            Toast.makeText(this, getString(R.string.connection_check), Toast.LENGTH_LONG).show();
-        }
+        NetworkUtilTask netTask = new NetworkUtilTask(getApplicationContext());
+        netTask.execute();
         //Initialized Progress Bar
         progressBar = findViewById(R.id.progressBar1);
         textViewEmpty = findViewById(R.id.textViewEmpty);

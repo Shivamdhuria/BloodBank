@@ -7,9 +7,8 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
-import android.widget.Toast;
 
-import com.elixer.bloodbank.NetworkAvailable;
+import com.elixer.bloodbank.NetworkUtilTask;
 import com.elixer.bloodbank.R;
 import com.elixer.bloodbank.query.DonorQueryActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -53,9 +52,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         latitude = bundle.getDouble("latitude");
         longitude = bundle.getDouble("longitude");
         //Network Check
-        if (!NetworkAvailable.isNetworkAvailable(MapsActivity.this)) {
-            Toast.makeText(this, getString(R.string.connection_check), Toast.LENGTH_LONG).show();
-        }
+        NetworkUtilTask netTask = new NetworkUtilTask(getApplicationContext());
+        netTask.execute();
         //On seek bar change
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override

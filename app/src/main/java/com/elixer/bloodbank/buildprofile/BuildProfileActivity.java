@@ -12,7 +12,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.aigestudio.wheelpicker.WheelPicker;
-import com.elixer.bloodbank.NetworkAvailable;
+import com.elixer.bloodbank.NetworkUtilTask;
 import com.elixer.bloodbank.R;
 import com.elixer.bloodbank.main.MainActivity;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -46,10 +46,8 @@ public class BuildProfileActivity extends AppCompatActivity implements BuildProf
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_build_profile);
         //Network Check
-        if(!NetworkAvailable.isNetworkAvailable(BuildProfileActivity.this)){
-            Toast.makeText(this,getString(R.string.contact_shared),Toast.LENGTH_LONG).show();
-        }
-
+        NetworkUtilTask netTask = new NetworkUtilTask(getApplicationContext());
+        netTask.execute();
 
         button_save=findViewById(R.id.button_save);
         button_setLocation=findViewById(R.id.button_location);

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.aigestudio.wheelpicker.WheelPicker;
+import com.elixer.bloodbank.NetworkUtilTask;
 import com.elixer.bloodbank.R;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -35,6 +36,12 @@ public class NewCampaignActivity extends AppCompatActivity {
         bloodgroups = Arrays.asList(getResources().getStringArray(R.array.blood_groups));
         wheel = (WheelPicker) findViewById(R.id.main_wheel);
         wheel.setData(bloodgroups);
+
+        //Network Check
+        NetworkUtilTask netTask = new NetworkUtilTask(getApplicationContext());
+        netTask.execute();
+
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

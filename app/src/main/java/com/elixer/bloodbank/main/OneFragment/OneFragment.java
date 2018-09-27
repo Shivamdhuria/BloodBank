@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.elixer.bloodbank.NetworkUtilTask;
 import com.elixer.bloodbank.R;
 import com.elixer.bloodbank.query.RequestModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class OneFragment extends Fragment {
     private FirebaseDatabase mFirebaseInstance;
@@ -89,6 +92,10 @@ public class OneFragment extends Fragment {
                 mAdapter.notifyDataSetChanged();
             }
         });
+
+        //Network Check
+        NetworkUtilTask netTask = new NetworkUtilTask(getApplicationContext());
+        netTask.execute();
 
     }
 
