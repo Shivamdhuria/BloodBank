@@ -3,9 +3,7 @@ package com.elixer.bloodbank.signin;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
-import com.elixer.bloodbank.NetworkAvailable;
 import com.elixer.bloodbank.R;
 import com.elixer.bloodbank.buildprofile.BuildProfileActivity;
 import com.elixer.bloodbank.main.MainActivity;
@@ -31,10 +29,7 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-        //Network Check
-        if(!NetworkAvailable.isNetworkAvailable(SignInActivity.this)){
-            Toast.makeText(this,getString(R.string.connection_check),Toast.LENGTH_LONG).show();
-        }
+
 
 
         // Choose authentication providers
